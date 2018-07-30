@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="James Overton &amp; Becky Tauber">
+  <title>ROBOT Tutorial</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/sky.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">ROBOT Tutorial</h1>
+  <p class="author">James Overton &amp; Becky Tauber</p>
+</section>
+
+<section><section id="manual-editing" class="title-slide slide level1"><h1>Manual Editing</h1></section><section id="status-quo" class="slide level2">
+<h2>Status Quo</h2>
+<ul>
+<li>development mainly done in Protégé</li>
+<li>requires manual editing and review</li>
+</ul>
+</section><section id="the-solution" class="slide level2">
+<h2>The Solution</h2>
+<ul>
+<li>ROBOT lets us automate many of those tasks</li>
+<li>… and provides better quality assurance!</li>
+</ul>
+</section></section>
+<section><section id="robot-for-repetitive-tasks" class="title-slide slide level1"><h1>ROBOT for Repetitive Tasks</h1></section><section class="slide level2">
+
+<h3>
+merge
+</h3>
+<h3>
+reason
+</h3>
+<h3>
+annotate
+</h3>
+<h3>
+convert
+</h3>
+</section><section id="merge" class="slide level2">
+<h2>Merge</h2>
+<ol type="1">
+<li>merge two separate ontologies</li>
+<li>merge imports into one ontology</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="merge-separate-ontologies">Merge Separate Ontologies</h3>
+<pre><code>robot merge --input edit.owl \
+  --input foo.owl \
+  --collapse-import-closure false \
+  --output results/merged.owl</code></pre>
+</section><section class="slide level2">
+
+<h3 id="merge-imports">Merge Imports</h3>
+<pre><code>robot merge --input edit.owl \
+  --collapse-import-closure true \
+  --output results/merged_imports.owl</code></pre>
+</section><section id="reason" class="slide level2">
+<h2>Reason</h2>
+<ol type="1">
+<li>logical validation</li>
+<li>automatic classification</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="reasoners">Reasoners</h3>
+<ul>
+<li>ELK: a very fast reasoner, but not as powerful as HermiT</li>
+<li>HermiT: optimized to classify complex ontologies</li>
+<li>EMR: materializes anonymous expressions</li>
+<li>Structural: a simple reasoner</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="logical-validation">Logical Validation</h3>
+<pre><code>robot reason --input inconsistent.owl</code></pre>
+</section><section class="slide level2">
+
+<h3 id="automatic-classification">Automatic Classification</h3>
+<pre><code>robot reason --input non-reasoned.owl \
+  --output results/reasoned.owl</code></pre>
+</section><section id="annotate" class="slide level2">
+<h2>Annotate</h2>
+<ol type="1">
+<li>add metadata to an ontology for release</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="add-metadata">Add Metadata</h3>
+<pre><code>robot annotate --input edit.owl \
+  --ontology-iri https://github.com/ontodev/robot/edit.owl \
+  --version-iri \
+    https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
+  --annotation oboInOwl:date &quot;08:07:2018 12:00&quot; \
+  --output results/annotated.owl</code></pre>
+</section><section id="convert" class="slide level2">
+<h2>Convert</h2>
+<ol type="1">
+<li>convert an editor’s file to verbose RDF/XML</li>
+<li>convert a released ontology to OBO</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="ontology-formats">Ontology Formats</h3>
+<ul>
+<li>default format is RDF/XML but…</li>
+<li>ontologies are shared in many formats
+<ul>
+<li>OWL functional</li>
+<li>OBO</li>
+<li>Turtle</li>
+<li>and more…</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="convert-the-edit-file">Convert the Edit File</h3>
+<pre><code>robot convert --input edit.owl \
+  --format owl \
+  --output results/release.owl</code></pre>
+</section><section class="slide level2">
+
+<h3 id="convert-to-obo">Convert to OBO</h3>
+<pre><code>robot convert --input edit.owl \
+  --output results/release.obo</code></pre>
+<p><small><small><strong>NOTE</strong>: You do not always need to include the <code>--format</code> if the extension of the <code>--output</code> matches the desired format.</small></small></p>
+</section></section>
+<section><section id="automated-workflows" class="title-slide slide level1"><h1>Automated Workflows</h1></section><section id="chaining-commands" class="slide level2">
+<h2>Chaining Commands</h2>
+<p><small>Output ontologies can be used as the input to subsequent commands. Only the first command uses an <code>--input</code>, and only the last command uses an <code>--output</code>.</small></p>
+<pre><code>robot merge --input edit.owl --collapse-import-closure true \
+  reason --reasoner ELK --create-new-ontology false \
+  annotate --version-iri \
+  http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
+  convert --output chained_release.obo</code></pre>
+</section><section id="makefiles" class="slide level2">
+<h2>Makefiles</h2>
+<p><small>A Makefile contains a set of rules to make target objects.<br>Here, we use it to create the release files.</small></p>
+<pre><code>make release</code></pre>
+</section></section>
+<section><section id="quality-assurance" class="title-slide slide level1"><h1>Quality Assurance</h1></section><section class="slide level2">
+
+<h3>
+diff
+</h3>
+<h3>
+query (part 1)
+</h3>
+<h3>
+verify
+</h3>
+<h3>
+report
+</h3>
+</section><section id="diff" class="slide level2">
+<h2>Diff</h2>
+<ol type="1">
+<li>compare the axioms in two version of an ontology</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="compare-axioms">Compare Axioms</h3>
+<pre><code>robot diff --left non-reasoned.owl \
+  --right reasoned.owl \
+  --output results/diff.txt</code></pre>
+<p><small><small><strong>NOTE</strong>: If you do not include an <code>--output</code>, the results will be printed to the terminal.</small></small></p>
+</section><section id="query" class="slide level2">
+<h2>Query</h2>
+<ol type="1">
+<li>run a SPARQL SELECT query</li>
+<li>run a SPARQL ASK query</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="select-query">Select Query</h3>
+<p><small>SELECT queries can be useful for statistics on the ontology, and for sharing data. For example, you could get a list of all the terms containing just the IDs and labels.</small></p>
+<pre><code>robot query --input edit.owl \
+  --query select.rq select.tsv</code></pre>
+</section><section class="slide level2">
+
+<h3 id="ask-query">Ask Query</h3>
+<p><small>ASK queries can help determine if something exists in the ontology or not. For example, if you want to make sure that “trunk” is in the “vertebrate core” subset.</small></p>
+<pre><code>robot query --input edit.owl \
+  --query ask.rq ask.txt</code></pre>
+</section><section id="verify" class="slide level2">
+<h2>Verify</h2>
+<ol type="1">
+<li>perform a successful verification</li>
+<li>perform an unsuccessful verification</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="successful-verification">Successful Verification</h3>
+<p><small>Sometimes, classes can be accidentally orphaned. This verification ensures that all classes, aside from the top-level “anatomical entity”, have asserted parents. If they do not, the verification fails.</small></p>
+<pre><code>robot verify --input edit.owl \
+  --queries verify.rq \
+  --output-dir .</code></pre>
+</section><section class="slide level2">
+
+<h3 id="unsuccessful-verification">Unsuccessful Verification</h3>
+<p><small>This verify query checks that all classes have an equivalent class statement. In our edit ontology, only some of the classes have equivalent classes, so this will fail.</small></p>
+<pre><code>robot verify --input edit.owl \
+  --queries verify_fail.rq \
+  --output-dir .</code></pre>
+</section><section id="report" class="slide level2">
+<h2>Report</h2>
+<ol type="1">
+<li>run a series of SPARQL queries to find common violations</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="violations">Violations</h3>
+<ul>
+<li>annotation, logical, or metadata violations</li>
+<li>three logging levels: ERROR, WARN, and INFO</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="generate-a-report">Generate a Report</h3>
+<pre><code>robot report --input edit.owl --output results/report.tsv</code></pre>
+</section><section id="continuous-integration" class="slide level2">
+<h2>Continuous Integration</h2>
+<ul>
+<li>Travis CI automatically builds and tests changes pushed to GitHub</li>
+<li>Often uses <code>make test</code> from the Makefile</li>
+<li>If any part of the test fails, the build will fail</li>
+</ul>
+</section></section>
+<section><section id="modular-development" class="title-slide slide level1"><h1>Modular Development</h1></section><section class="slide level2">
+
+<h3>
+extract
+</h3>
+<h3>
+template
+</h3>
+</section><section id="extract" class="slide level2">
+<h2>Extract</h2>
+<ol type="1">
+<li>create an import module with SLME</li>
+<li>create an import module with MIREOT</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="import-modules">Import Modules</h3>
+<ul>
+<li>many bioontologies use terms from external sources</li>
+<li>these sources contain more terms than needed</li>
+<li>extract ensures the necessary terms and their dependencies are included in module</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="extract-with-slme">Extract with SLME</h3>
+<p><small> STAR: fixpoint-nested<br> BOT: bottom module<br> TOP: top module </small></p>
+<pre><code>robot extract \
+  --input-iri http://purl.obolibrary.org/obo/obi.owl \
+  --term OBI:0000443 \
+  --method BOT \
+  --output results/obi_bot.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: You can also include a list of terms to extract in a text file with <code>--term-file</code>.</small></small></p>
+</section><section class="slide level2">
+
+<h3 id="extract-with-mireot">Extract with MIREOT</h3>
+<p><small> Creates a simple hierarchy of terms.<br> Requires lower term(s) and optional upper term(s). </small></p>
+<pre><code>robot extract \
+  --input-iri http://purl.obolibrary.org/obo/obi.owl \
+  --method MIREOT \
+  --lower-terms obi_terms.txt \
+  --output results/obi_mireot.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: Without specifiying any <code>--upper-terms</code>, the MIREOT method will include all ancestors up to <code>owl:Thing</code>.<br> <strong>NOTE 2</strong>: To just specify <em>one</em> term to extract, use <code>--lower-term</code></small></small></p>
+</section><section id="template" class="slide level2">
+<h2>Template</h2>
+<ol type="1">
+<li>create a module</li>
+<li>add a class to an ontology</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="create-a-module">Create a Module</h3>
+<p><small>This will create a standalone module that can be included in the edit file with an import statement. To update the module, editors only need to update the spreadsheet and run this command to remake the module.</small></p>
+<pre><code>robot template --input edit.owl \
+  --template module.tsv \
+  --output results/module.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: <code>template</code> gets all the entity labels from <code>edit.owl</code> so we are able to use the labels in the spreadsheet, instead of always specifying the ID. If we didn’t include the <code>--input</code>, the labels would not resolve.</small></small></p>
+</section><section class="slide level2">
+
+<h3 id="add-a-class-to-an-ontology">Add a Class to an Ontology</h3>
+<p><small>For one-time class creation (especially if many classes need to be created), a temporary template can be created and the results immediately merged into the edit ontology.</small></p>
+<pre><code>robot template --input edit.owl \
+  --merge-before \
+  --collapse-import-closure false \
+  --template new_class.tsv \
+  --output results/new_class.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: because the edit ontology already contains import statements, we don’t want these to be merged in so we need to include <code>--collapse-import-closure false</code>.</small></small></p>
+</section></section>
+<section><section id="modular-releases" class="title-slide slide level1"><h1>Modular Releases</h1></section><section class="slide level2">
+
+<h3>
+query (part 2)
+</h3>
+<h3>
+remove
+</h3>
+<h3>
+filter
+</h3>
+</section><section id="querying-with-sparql-construct" class="slide level2">
+<h2>Querying with SPARQL CONSTRUCT</h2>
+<ul>
+<li>CONSTRUCT produces RDF data in Turtle format</li>
+<li>allows creation of new sets of triples</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="update-annotations-with-construct">Update Annotations with CONSTRUCT</h3>
+<pre><code>robot query --input edit.owl \
+  --query construct.rq construct.ttl </code></pre>
+<p><small><br>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it:</small></p>
+<pre><code>robot merge --input edit.owl \
+  --input construct.ttl \
+  --output results/update.owl</code></pre>
+</section><section id="remove" class="slide level2">
+<h2>Remove</h2>
+<ol type="1">
+<li>remove a class and its descendants</li>
+<li>create a ‘simple’ version of an ontology</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="configuration">Configuration</h3>
+<ul>
+<li>remove a term (or terms) from an ontology and any related terms</li>
+<li>highly configurable <code>--select</code> option to remove related terms</li>
+<li>specify types of axioms to remove with <code>--axioms</code></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="remove-a-class-descendants">Remove a Class + Descendants</h3>
+<pre><code>robot remove --input edit.owl \
+  --entity UBERON:0000475 \
+  --select &quot;self descendants&quot; \
+  --output results/removed.owl</code></pre>
+</section><section class="slide level2">
+
+<h3 id="create-a-simple-version">Create a ‘Simple’ Version</h3>
+<pre><code>robot remove --input edit.owl \
+  --axioms equivalent \
+  remove --select parents --select anonymous \
+  --output results/simple.owl</code></pre>
+</section><section id="filter" class="slide level2">
+<h2>Filter</h2>
+<ol type="1">
+<li>extract a branch of an ontology</li>
+<li>create a subset based on annotations</li>
+</ol>
+</section><section class="slide level2">
+
+<h3 id="extract-a-branch">Extract a Branch</h3>
+<pre><code>robot filter --input edit.owl \
+  --entity UBERON:0000475 \
+  --select self --select descendants --select annotations \
+  --output results/branch.owl</code></pre>
+</section><section class="slide level2">
+
+<h3 id="create-a-subset">Create a Subset</h3>
+<pre><code>robot filter --select \
+  &quot;oboInOwl:inSubset= \
+   &lt;http://purl.obolibrary.org/obo/uberon/core#uberon_slim&gt;&quot; \
+  --output results/uberon_slim.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: selecting for annotations is highly configurable:<br> <code>CURIE=CURIE</code><br> <code>CURIE=&quot;literal&quot;^^datatype</code><br> <code>CURIE=&lt;IRI&gt;</code><br> <code>CURIE=~&quot;regex pattern&quot;</code></small></small></p>
+</section></section>
+<section><section id="other-commands" class="title-slide slide level1"><h1>Other Commands</h1></section><section class="slide level2">
+
+<h3>
+materialize
+</h3>
+<h3>
+ mirror     reduce
+</h3>
+<h3>
+  relax     repair
+</h3>
+<h3>
+unmerge     validate
+</h3>
+</section></section>
+<section><section id="questions" class="title-slide slide level1"><h1>Questions?</h1></section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
