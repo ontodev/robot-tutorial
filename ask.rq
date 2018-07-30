@@ -1,0 +1,8 @@
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
+PREFIX core: <http://purl.obolibrary.org/obo/uberon/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+ASK { 
+	?s oboInOwl:inSubset core:vertebrate_core .
+	?s rdfs:label "trunk"
+}

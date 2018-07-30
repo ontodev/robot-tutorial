@@ -1,0 +1,7 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT * WHERE {
+	?s a owl:Class .
+	FILTER NOT EXISTS {?s owl:equivalentClasses ?eq}
+	FILTER (!isBlank(?s))
+}

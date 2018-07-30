@@ -1,0 +1,3 @@
+OBI:0000443 # analyte assay
+OBI:0000185 # imaging assay
+OBI:0600047 # sequencing assay
