@@ -148,7 +148,7 @@ robot merge --input edit.owl --collapse-import-closure true \
   reason --reasoner ELK --create-new-ontology false \
   annotate --version-iri \
   http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output chained_release.obo
+  convert --output results/chained_release.obo
 ```
 
 ## Makefiles
@@ -180,7 +180,7 @@ make release
 
 ```
 robot diff --left non-reasoned.owl \
-  --right reasoned.owl \
+  --right results/reasoned.owl \
   --output results/diff.txt
 ```
 
@@ -199,7 +199,7 @@ robot diff --left non-reasoned.owl \
 
 ```
 robot query --input edit.owl \
-  --query select.rq select.tsv
+  --query select.rq results/select.tsv
 ```
 
 ---
@@ -210,7 +210,7 @@ robot query --input edit.owl \
 
 ```
 robot query --input edit.owl \
-  --query ask.rq ask.txt
+  --query ask.rq results/ask.txt
 ```
 
 ## Verify
@@ -227,7 +227,7 @@ robot query --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir .
+  --output-dir results
 ```
 
 ---
@@ -239,7 +239,7 @@ robot verify --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir .
+  --output-dir results
 ```
 
 

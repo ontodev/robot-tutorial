@@ -9,7 +9,7 @@ SHELL := bash
 
 # MAIN TASKS
 
-release: test build subsets
+release: test build
 test: verify
 
 # VARIABLES
@@ -19,7 +19,7 @@ EDIT = edit.owl
 ONT = ont
 OBO = http://purl.obolibrary.org/obo/
 RELEASE = $(DATE)
-REPORT = $(RELEASE)/$(DATE)/report
+REPORT = $(RELEASE)/report
 SUB = $(RELEASE)/subsets
 SUBS = efo_slim uberon_slim upper_level
 TS = $(shell date +'%m:%d:%Y %H:%M')
@@ -33,7 +33,7 @@ init:
 
 # This runs a verification query
 .PHONY: verify
-verify:
+verify: | init
 	robot verify --input $(EDIT)\
 	 --queries verify.rq --output-dir $(REPORT)
 
@@ -50,15 +50,16 @@ $(DATE)/$(ONT).owl: $(EDIT)
 	 --annotation oboInOwl:date "$(TS)" --output $@
 
 # This creates the OBO release file (ont.obo)
-$(DATE)/$(ONT).obo: $(ONT).owl
+$(DATE)/$(ONT).obo: $(DATE)/$(ONT).owl
 	robot convert --input $< --format obo\
-	 --check false --output $(basename $@)-temp.obo && \
+	 --output $(basename $@)-temp.obo && \
 	grep -v ^owl-axioms $(basename $@)-temp.obo > $@ && \
 	rm $(basename $@)-temp.obo
 
 # SUBSETS
 
 # This generates the three subset files
+# Currently not implemented in `make release` as this `filter` is not supported in 1.0.0
 .PHONY: subsets
 subsets: $(SUBS) | init
 $(SUBS): $(DATE)/$(ONT).owl

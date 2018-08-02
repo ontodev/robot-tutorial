@@ -160,7 +160,7 @@ convert
   reason --reasoner ELK --create-new-ontology false \
   annotate --version-iri \
   http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output chained_release.obo</code></pre>
+  convert --output results/chained_release.obo</code></pre>
 </section><section id="makefiles" class="slide level2">
 <h2>Makefiles</h2>
 <p><small>A Makefile contains a set of rules to make target objects.<br>Here, we use it to create the release files.</small></p>
@@ -189,7 +189,7 @@ report
 
 <h3 id="compare-axioms">Compare Axioms</h3>
 <pre><code>robot diff --left non-reasoned.owl \
-  --right reasoned.owl \
+  --right results/reasoned.owl \
   --output results/diff.txt</code></pre>
 <p><small><small><strong>NOTE</strong>: If you do not include an <code>--output</code>, the results will be printed to the terminal.</small></small></p>
 </section><section id="query" class="slide level2">
@@ -203,13 +203,13 @@ report
 <h3 id="select-query">Select Query</h3>
 <p><small>SELECT queries can be useful for statistics on the ontology, and for sharing data. For example, you could get a list of all the terms containing just the IDs and labels.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query select.rq select.tsv</code></pre>
+  --query select.rq results/select.tsv</code></pre>
 </section><section class="slide level2">
 
 <h3 id="ask-query">Ask Query</h3>
 <p><small>ASK queries can help determine if something exists in the ontology or not. For example, if you want to make sure that “trunk” is in the “vertebrate core” subset.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query ask.rq ask.txt</code></pre>
+  --query ask.rq results/ask.txt</code></pre>
 </section><section id="verify" class="slide level2">
 <h2>Verify</h2>
 <ol type="1">
@@ -222,14 +222,14 @@ report
 <p><small>Sometimes, classes can be accidentally orphaned. This verification ensures that all classes, aside from the top-level “anatomical entity”, have asserted parents. If they do not, the verification fails.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir .</code></pre>
+  --output-dir results</code></pre>
 </section><section class="slide level2">
 
 <h3 id="unsuccessful-verification">Unsuccessful Verification</h3>
 <p><small>This verify query checks that all classes have an equivalent class statement. In our edit ontology, only some of the classes have equivalent classes, so this will fail.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir .</code></pre>
+  --output-dir results</code></pre>
 </section><section id="report" class="slide level2">
 <h2>Report</h2>
 <ol type="1">
