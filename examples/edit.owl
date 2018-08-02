@@ -11,6 +11,7 @@ Prefix(oboInOwl:=<http://www.geneontology.org/formats/oboInOwl#>)
 
 
 Ontology(<https://github.com/ontodev/robot/examples/edit.owl>
+Import(<http://purl.obolibrary.org/obo/robot/go_module.owl>)
 
 Declaration(Class(obo:UBERON_0000061))
 Declaration(Class(obo:UBERON_0000062))
