@@ -49,6 +49,13 @@
 <li>ROBOT lets us automate many of those tasks</li>
 <li>… and provides better quality assurance!</li>
 </ul>
+</section><section id="robot-releases" class="slide level2">
+<h2>ROBOT Releases</h2>
+<ul>
+<li>v1.0.0 released Feb 8, 2018</li>
+<li>v1.1.0 released Aug 4, 2018</li>
+<li>v1.2.0-alpha released Aug 4, 2018</li>
+</ul>
 </section></section>
 <section><section id="robot-for-repetitive-tasks" class="title-slide slide level1"><h1>ROBOT for Repetitive Tasks</h1></section><section class="slide level2">
 
@@ -73,6 +80,7 @@ convert
 </section><section class="slide level2">
 
 <h3 id="merge-separate-ontologies">Merge Separate Ontologies</h3>
+<p><small>The <code>--collapse-import-closure</code> option is not supported in v1.0.0.</small></p>
 <pre><code>robot merge --input edit.owl \
   --input foo.owl \
   --collapse-import-closure false \
@@ -80,6 +88,7 @@ convert
 </section><section class="slide level2">
 
 <h3 id="merge-imports">Merge Imports</h3>
+<p><small>ROBOT v1.0.0 will automatically merge imports.</small></p>
 <pre><code>robot merge --input edit.owl \
   --collapse-import-closure true \
   --output results/merged_imports.owl</code></pre>
@@ -233,7 +242,7 @@ report
 </section><section id="report" class="slide level2">
 <h2>Report</h2>
 <ol type="1">
-<li>run a series of SPARQL queries to find common violations</li>
+<li>run a series of SPARQL queries to find common violations (as of v1.1.0)</li>
 </ol>
 </section><section class="slide level2">
 
@@ -349,6 +358,7 @@ filter
   --output results/update.owl</code></pre>
 </section><section id="remove" class="slide level2">
 <h2>Remove</h2>
+<p>Released with v1.2.0-alpha.</p>
 <ol type="1">
 <li>remove a class and its descendants</li>
 <li>create a ‘simple’ version of an ontology</li>
@@ -377,6 +387,7 @@ filter
   --output results/simple.owl</code></pre>
 </section><section id="filter" class="slide level2">
 <h2>Filter</h2>
+<p>Released with v1.2.0-alpha - previously, <code>filter</code> only filtered for object properties.</p>
 <ol type="1">
 <li>extract a branch of an ontology</li>
 <li>create a subset based on annotations</li>

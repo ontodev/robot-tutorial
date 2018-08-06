@@ -15,6 +15,12 @@ title: ROBOT Tutorial
 - ROBOT lets us automate many of those tasks
 - ... and provides better quality assurance!
 
+## ROBOT Releases
+
+- v1.0.0 released Feb 8, 2018
+- v1.1.0 released Aug 4, 2018
+- v1.2.0-alpha released Aug 4, 2018
+
 # ROBOT for Repetitive Tasks
 
 ---
@@ -35,6 +41,8 @@ title: ROBOT Tutorial
 
 ### Merge Separate Ontologies
 
+<small>The `--collapse-import-closure` option is not supported in v1.0.0.</small>
+
 ```
 robot merge --input edit.owl \
   --input foo.owl \
@@ -45,6 +53,8 @@ robot merge --input edit.owl \
 ---
 
 ### Merge Imports
+
+<small>ROBOT v1.0.0 will automatically merge imports.</small>
 
 ```
 robot merge --input edit.owl \
@@ -245,7 +255,7 @@ robot verify --input edit.owl \
 
 ## Report
 
-1. run a series of SPARQL queries to find common violations
+1. run a series of SPARQL queries to find common violations (as of v1.1.0)
 
 ---
 
@@ -399,6 +409,8 @@ robot merge --input edit.owl \
 
 ## Remove
 
+Released with v1.2.0-alpha.
+
 1. remove a class and its descendants
 2. create a 'simple' version of an ontology
 
@@ -433,6 +445,8 @@ robot remove --input edit.owl \
 ```
 
 ## Filter
+
+Released with v1.2.0-alpha - previously, `filter` only filtered for object properties.
 
 1. extract a branch of an ontology
 2. create a subset based on annotations
