@@ -19,7 +19,13 @@ title: ROBOT Tutorial
 
 - v1.0.0 released Feb 8, 2018
 - v1.1.0 released Aug 4, 2018
-- v1.2.0-alpha released Aug 4, 2018
+- v1.2.0-alpha pre-released Aug 4, 2018
+
+## Let's get started!
+
+- optional: download [ROBOT v1.2.0-alpha](https://github.com/ontodev/robot/releases/tag/v1.2.0-alpha-1)
+- download the [tutorial repository](https://github.com/rctauber/robot-tutorial)
+- open the `examples` directory in the command line
 
 # ROBOT for Repetitive Tasks
 
@@ -47,7 +53,7 @@ title: ROBOT Tutorial
 robot merge --input edit.owl \
   --input foo.owl \
   --collapse-import-closure false \
-  --output results/merged.owl
+  --output merged.owl
 ```
 
 ---
@@ -59,7 +65,7 @@ robot merge --input edit.owl \
 ```
 robot merge --input edit.owl \
   --collapse-import-closure true \
-  --output results/merged_imports.owl
+  --output merged_imports.owl
 ```
 
 ## Reason
@@ -90,7 +96,7 @@ robot reason --input inconsistent.owl
 
 ```
 robot reason --input non-reasoned.owl \
-  --output results/reasoned.owl
+  --output reasoned.owl
 ```
 
 ## Annotate
@@ -107,7 +113,7 @@ robot annotate --input edit.owl \
   --version-iri \
     https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
   --annotation oboInOwl:date "08:07:2018 12:00" \
-  --output results/annotated.owl
+  --output annotated.owl
 ```
 
 ## Convert
@@ -133,7 +139,7 @@ robot annotate --input edit.owl \
 ```
 robot convert --input edit.owl \
   --format owl \
-  --output results/release.owl
+  --output release.owl
 ```
 
 ---
@@ -142,7 +148,7 @@ robot convert --input edit.owl \
 
 ```
 robot convert --input edit.owl \
-  --output results/release.obo
+  --output release.obo
 ```
 
 <small><small>**NOTE**: You do not always need to include the `--format` if the extension of the `--output` matches the desired format.</small></small>
@@ -158,7 +164,7 @@ robot merge --input edit.owl --collapse-import-closure true \
   reason --reasoner ELK --create-new-ontology false \
   annotate --version-iri \
   http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output results/chained_release.obo
+  convert --output chained_release.ttl
 ```
 
 ## Makefiles
@@ -190,8 +196,8 @@ make release
 
 ```
 robot diff --left non-reasoned.owl \
-  --right results/reasoned.owl \
-  --output results/diff.txt
+  --right reasoned.owl \
+  --output diff.txt
 ```
 
 <small><small>**NOTE**: If you do not include an `--output`, the results will be printed to the terminal.</small></small>
@@ -209,7 +215,7 @@ robot diff --left non-reasoned.owl \
 
 ```
 robot query --input edit.owl \
-  --query select.rq results/select.tsv
+  --query select.rq select.tsv
 ```
 
 ---
@@ -220,7 +226,7 @@ robot query --input edit.owl \
 
 ```
 robot query --input edit.owl \
-  --query ask.rq results/ask.txt
+  --query ask.rq ask.txt
 ```
 
 ## Verify
@@ -237,7 +243,7 @@ robot query --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir results
+  --output-dir .
 ```
 
 ---
@@ -249,7 +255,7 @@ robot verify --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir results
+  --output-dir .
 ```
 
 
@@ -269,7 +275,7 @@ robot verify --input edit.owl \
 ### Generate a Report
 
 ```
-robot report --input edit.owl --output results/report.tsv
+robot report --input edit.owl --output report.tsv
 ```
 
 ## Continuous Integration
@@ -315,7 +321,7 @@ robot extract \
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --term OBI:0000443 \
   --method BOT \
-  --output results/obi_bot.owl
+  --output obi_bot.owl
 ```
 
 <small><small>**NOTE**: You can also include a list of terms to extract in a text file with `--term-file`.</small></small>
@@ -334,7 +340,7 @@ robot extract \
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --method MIREOT \
   --lower-terms obi_terms.txt \
-  --output results/obi_mireot.owl
+  --output obi_mireot.owl
 ```
 
 <small><small>**NOTE**: Without specifiying any `--upper-terms`, the MIREOT method will include all ancestors up to `owl:Thing`.<br>
@@ -354,7 +360,7 @@ robot extract \
 ```
 robot template --input edit.owl \
   --template module.tsv \
-  --output results/module.owl
+  --output module.owl
 ```
 
 <small><small>**NOTE**: `template` gets all the entity labels from `edit.owl` so we are able to use the labels in the spreadsheet, instead of always specifying the ID. If we didn't include the `--input`, the labels would not resolve.</small></small>
@@ -370,7 +376,7 @@ robot template --input edit.owl \
   --merge-before \
   --collapse-import-closure false \
   --template new_class.tsv \
-  --output results/new_class.owl
+  --output new_class.owl
 ```
 
 <small><small>**NOTE**: because the edit ontology already contains import statements, we don't want these to be merged in so we need to include `--collapse-import-closure false`.</small></small>
@@ -404,7 +410,7 @@ robot query --input edit.owl \
 ```
 robot merge --input edit.owl \
   --input construct.ttl \
-  --output results/update.owl
+  --output update.owl
 ```
 
 ## Remove
@@ -428,9 +434,9 @@ Released with v1.2.0-alpha.
 
 ```
 robot remove --input edit.owl \
-  --entity UBERON:0000475 \
+  --term UBERON:0000475 \
   --select "self descendants" \
-  --output results/removed.owl
+  --output removed.owl
 ```
 
 ---
@@ -441,7 +447,7 @@ robot remove --input edit.owl \
 robot remove --input edit.owl \
   --axioms equivalent \
   remove --select parents --select anonymous \
-  --output results/simple.owl
+  --output simple.owl
 ```
 
 ## Filter
@@ -457,20 +463,23 @@ Released with v1.2.0-alpha - previously, `filter` only filtered for object prope
 
 ```
 robot filter --input edit.owl \
-  --entity UBERON:0000475 \
+  --term UBERON:0000475 \
   --select self --select descendants --select annotations \
-  --output results/branch.owl
+  --output branch.owl
 ```
+
+<small><small>NOTE: in order to include annotations on the filtered entities, `--select annotations` must be included. Otherwise, you muist include *all* annotation properties in the set of input terms.</small></small>
 
 ---
 
 ### Create a Subset
 
 ```
-robot filter --select \
-  "oboInOwl:inSubset= \
-   <http://purl.obolibrary.org/obo/uberon/core#uberon_slim>" \
-  --output results/uberon_slim.owl
+robot filter --input edit.owl \
+  --select \
+  "oboInOwl:inSubset=<http://purl.obolibrary.org/obo/uberon/core#uberon_slim>" \
+  --select annotations \
+  --output uberon_slim.owl
 ```
 
 <small><small>**NOTE**: selecting for annotations is highly configurable:<br>

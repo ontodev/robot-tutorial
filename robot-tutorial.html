@@ -54,7 +54,14 @@
 <ul>
 <li>v1.0.0 released Feb 8, 2018</li>
 <li>v1.1.0 released Aug 4, 2018</li>
-<li>v1.2.0-alpha released Aug 4, 2018</li>
+<li>v1.2.0-alpha pre-released Aug 4, 2018</li>
+</ul>
+</section><section id="lets-get-started" class="slide level2">
+<h2>Let’s get started!</h2>
+<ul>
+<li>optional: download <a href="https://github.com/ontodev/robot/releases/tag/v1.2.0-alpha-1">ROBOT v1.2.0-alpha</a></li>
+<li>download the <a href="https://github.com/rctauber/robot-tutorial">tutorial repository</a></li>
+<li>open the <code>examples</code> directory in the command line</li>
 </ul>
 </section></section>
 <section><section id="robot-for-repetitive-tasks" class="title-slide slide level1"><h1>ROBOT for Repetitive Tasks</h1></section><section class="slide level2">
@@ -84,14 +91,14 @@ convert
 <pre><code>robot merge --input edit.owl \
   --input foo.owl \
   --collapse-import-closure false \
-  --output results/merged.owl</code></pre>
+  --output merged.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="merge-imports">Merge Imports</h3>
 <p><small>ROBOT v1.0.0 will automatically merge imports.</small></p>
 <pre><code>robot merge --input edit.owl \
   --collapse-import-closure true \
-  --output results/merged_imports.owl</code></pre>
+  --output merged_imports.owl</code></pre>
 </section><section id="reason" class="slide level2">
 <h2>Reason</h2>
 <ol type="1">
@@ -115,7 +122,7 @@ convert
 
 <h3 id="automatic-classification">Automatic Classification</h3>
 <pre><code>robot reason --input non-reasoned.owl \
-  --output results/reasoned.owl</code></pre>
+  --output reasoned.owl</code></pre>
 </section><section id="annotate" class="slide level2">
 <h2>Annotate</h2>
 <ol type="1">
@@ -129,7 +136,7 @@ convert
   --version-iri \
     https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
   --annotation oboInOwl:date &quot;08:07:2018 12:00&quot; \
-  --output results/annotated.owl</code></pre>
+  --output annotated.owl</code></pre>
 </section><section id="convert" class="slide level2">
 <h2>Convert</h2>
 <ol type="1">
@@ -154,12 +161,12 @@ convert
 <h3 id="convert-the-edit-file">Convert the Edit File</h3>
 <pre><code>robot convert --input edit.owl \
   --format owl \
-  --output results/release.owl</code></pre>
+  --output release.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="convert-to-obo">Convert to OBO</h3>
 <pre><code>robot convert --input edit.owl \
-  --output results/release.obo</code></pre>
+  --output release.obo</code></pre>
 <p><small><small><strong>NOTE</strong>: You do not always need to include the <code>--format</code> if the extension of the <code>--output</code> matches the desired format.</small></small></p>
 </section></section>
 <section><section id="automated-workflows" class="title-slide slide level1"><h1>Automated Workflows</h1></section><section id="chaining-commands" class="slide level2">
@@ -169,7 +176,7 @@ convert
   reason --reasoner ELK --create-new-ontology false \
   annotate --version-iri \
   http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output results/chained_release.obo</code></pre>
+  convert --output chained_release.ttl</code></pre>
 </section><section id="makefiles" class="slide level2">
 <h2>Makefiles</h2>
 <p><small>A Makefile contains a set of rules to make target objects.<br>Here, we use it to create the release files.</small></p>
@@ -198,8 +205,8 @@ report
 
 <h3 id="compare-axioms">Compare Axioms</h3>
 <pre><code>robot diff --left non-reasoned.owl \
-  --right results/reasoned.owl \
-  --output results/diff.txt</code></pre>
+  --right reasoned.owl \
+  --output diff.txt</code></pre>
 <p><small><small><strong>NOTE</strong>: If you do not include an <code>--output</code>, the results will be printed to the terminal.</small></small></p>
 </section><section id="query" class="slide level2">
 <h2>Query</h2>
@@ -212,13 +219,13 @@ report
 <h3 id="select-query">Select Query</h3>
 <p><small>SELECT queries can be useful for statistics on the ontology, and for sharing data. For example, you could get a list of all the terms containing just the IDs and labels.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query select.rq results/select.tsv</code></pre>
+  --query select.rq select.tsv</code></pre>
 </section><section class="slide level2">
 
 <h3 id="ask-query">Ask Query</h3>
 <p><small>ASK queries can help determine if something exists in the ontology or not. For example, if you want to make sure that “trunk” is in the “vertebrate core” subset.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query ask.rq results/ask.txt</code></pre>
+  --query ask.rq ask.txt</code></pre>
 </section><section id="verify" class="slide level2">
 <h2>Verify</h2>
 <ol type="1">
@@ -231,14 +238,14 @@ report
 <p><small>Sometimes, classes can be accidentally orphaned. This verification ensures that all classes, aside from the top-level “anatomical entity”, have asserted parents. If they do not, the verification fails.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir results</code></pre>
+  --output-dir .</code></pre>
 </section><section class="slide level2">
 
 <h3 id="unsuccessful-verification">Unsuccessful Verification</h3>
 <p><small>This verify query checks that all classes have an equivalent class statement. In our edit ontology, only some of the classes have equivalent classes, so this will fail.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir results</code></pre>
+  --output-dir .</code></pre>
 </section><section id="report" class="slide level2">
 <h2>Report</h2>
 <ol type="1">
@@ -254,7 +261,7 @@ report
 </section><section class="slide level2">
 
 <h3 id="generate-a-report">Generate a Report</h3>
-<pre><code>robot report --input edit.owl --output results/report.tsv</code></pre>
+<pre><code>robot report --input edit.owl --output report.tsv</code></pre>
 </section><section id="continuous-integration" class="slide level2">
 <h2>Continuous Integration</h2>
 <ul>
@@ -293,7 +300,7 @@ template
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --term OBI:0000443 \
   --method BOT \
-  --output results/obi_bot.owl</code></pre>
+  --output obi_bot.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: You can also include a list of terms to extract in a text file with <code>--term-file</code>.</small></small></p>
 </section><section class="slide level2">
 
@@ -303,7 +310,7 @@ template
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --method MIREOT \
   --lower-terms obi_terms.txt \
-  --output results/obi_mireot.owl</code></pre>
+  --output obi_mireot.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: Without specifiying any <code>--upper-terms</code>, the MIREOT method will include all ancestors up to <code>owl:Thing</code>.<br> <strong>NOTE 2</strong>: To just specify <em>one</em> term to extract, use <code>--lower-term</code></small></small></p>
 </section><section id="template" class="slide level2">
 <h2>Template</h2>
@@ -317,7 +324,7 @@ template
 <p><small>This will create a standalone module that can be included in the edit file with an import statement. To update the module, editors only need to update the spreadsheet and run this command to remake the module.</small></p>
 <pre><code>robot template --input edit.owl \
   --template module.tsv \
-  --output results/module.owl</code></pre>
+  --output module.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: <code>template</code> gets all the entity labels from <code>edit.owl</code> so we are able to use the labels in the spreadsheet, instead of always specifying the ID. If we didn’t include the <code>--input</code>, the labels would not resolve.</small></small></p>
 </section><section class="slide level2">
 
@@ -327,7 +334,7 @@ template
   --merge-before \
   --collapse-import-closure false \
   --template new_class.tsv \
-  --output results/new_class.owl</code></pre>
+  --output new_class.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: because the edit ontology already contains import statements, we don’t want these to be merged in so we need to include <code>--collapse-import-closure false</code>.</small></small></p>
 </section></section>
 <section><section id="modular-releases" class="title-slide slide level1"><h1>Modular Releases</h1></section><section class="slide level2">
@@ -355,7 +362,7 @@ filter
 <p><small><br>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it:</small></p>
 <pre><code>robot merge --input edit.owl \
   --input construct.ttl \
-  --output results/update.owl</code></pre>
+  --output update.owl</code></pre>
 </section><section id="remove" class="slide level2">
 <h2>Remove</h2>
 <p>Released with v1.2.0-alpha.</p>
@@ -375,16 +382,16 @@ filter
 
 <h3 id="remove-a-class-descendants">Remove a Class + Descendants</h3>
 <pre><code>robot remove --input edit.owl \
-  --entity UBERON:0000475 \
+  --term UBERON:0000475 \
   --select &quot;self descendants&quot; \
-  --output results/removed.owl</code></pre>
+  --output removed.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="create-a-simple-version">Create a ‘Simple’ Version</h3>
 <pre><code>robot remove --input edit.owl \
   --axioms equivalent \
   remove --select parents --select anonymous \
-  --output results/simple.owl</code></pre>
+  --output simple.owl</code></pre>
 </section><section id="filter" class="slide level2">
 <h2>Filter</h2>
 <p>Released with v1.2.0-alpha - previously, <code>filter</code> only filtered for object properties.</p>
@@ -396,16 +403,18 @@ filter
 
 <h3 id="extract-a-branch">Extract a Branch</h3>
 <pre><code>robot filter --input edit.owl \
-  --entity UBERON:0000475 \
+  --term UBERON:0000475 \
   --select self --select descendants --select annotations \
-  --output results/branch.owl</code></pre>
+  --output branch.owl</code></pre>
+<p><small><small>NOTE: in order to include annotations on the filtered entities, <code>--select annotations</code> must be included. Otherwise, you muist include <em>all</em> annotation properties in the set of input terms.</small></small></p>
 </section><section class="slide level2">
 
 <h3 id="create-a-subset">Create a Subset</h3>
-<pre><code>robot filter --select \
-  &quot;oboInOwl:inSubset= \
-   &lt;http://purl.obolibrary.org/obo/uberon/core#uberon_slim&gt;&quot; \
-  --output results/uberon_slim.owl</code></pre>
+<pre><code>robot filter --input edit.owl \
+  --select \
+  &quot;oboInOwl:inSubset=&lt;http://purl.obolibrary.org/obo/uberon/core#uberon_slim&gt;&quot; \
+  --select annotations \
+  --output uberon_slim.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: selecting for annotations is highly configurable:<br> <code>CURIE=CURIE</code><br> <code>CURIE=&quot;literal&quot;^^datatype</code><br> <code>CURIE=&lt;IRI&gt;</code><br> <code>CURIE=~&quot;regex pattern&quot;</code></small></small></p>
 </section></section>
 <section><section id="other-commands" class="title-slide slide level1"><h1>Other Commands</h1></section><section class="slide level2">
