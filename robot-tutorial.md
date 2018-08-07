@@ -47,25 +47,21 @@ title: ROBOT Tutorial
 
 ### Merge Separate Ontologies
 
-<small>The `--collapse-import-closure` option is not supported in v1.0.0.</small>
-
 ```
 robot merge --input edit.owl \
   --input foo.owl \
-  --collapse-import-closure false \
-  --output merged.owl
+  --output results/merged.owl
 ```
 
 ---
 
 ### Merge Imports
 
-<small>ROBOT v1.0.0 will automatically merge imports.</small>
+<small>ROBOT will automatically merge imports. To *not* merge imports, include `--collapse-import-closure false`. This option is not supported in v1.0.0.</small>
 
 ```
-robot merge --input edit.owl \
-  --collapse-import-closure true \
-  --output merged_imports.owl
+robot merge --input with-import.owl \
+  --output results/merged_imports.owl
 ```
 
 ## Reason
@@ -86,8 +82,10 @@ robot merge --input edit.owl \
 
 ### Logical Validation
 
+<small>Validates that the ontology contains no unsatisfiable entities and that it is not inconsistent.</small>
+
 ```
-robot reason --input inconsistent.owl
+robot reason --input unsatisfiable.owl
 ```
 
 ---
@@ -96,7 +94,7 @@ robot reason --input inconsistent.owl
 
 ```
 robot reason --input non-reasoned.owl \
-  --output reasoned.owl
+  --output results/reasoned.owl
 ```
 
 ## Annotate
@@ -109,11 +107,10 @@ robot reason --input non-reasoned.owl \
 
 ```
 robot annotate --input edit.owl \
-  --ontology-iri https://github.com/ontodev/robot/edit.owl \
   --version-iri \
     https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
   --annotation oboInOwl:date "08:07:2018 12:00" \
-  --output annotated.owl
+  --output results/annotated.owl
 ```
 
 ## Convert
@@ -139,8 +136,10 @@ robot annotate --input edit.owl \
 ```
 robot convert --input edit.owl \
   --format owl \
-  --output release.owl
+  --output results/release.owl
 ```
+
+<small><small>**NOTE**: OWL functional syntax is defined by the suffix `.ofn` - if you want to convert to that format, use `--format ofn` or an output ending in `.ofn`. The `.owl` suffix can be used to represent any OWL ontology. Using `--format owl` or excluding the `--format` option and specifying an output with `.owl` will convert to RDF/XML.</small></small>
 
 ---
 
@@ -148,7 +147,7 @@ robot convert --input edit.owl \
 
 ```
 robot convert --input edit.owl \
-  --output release.obo
+  --output results/release.obo
 ```
 
 <small><small>**NOTE**: You do not always need to include the `--format` if the extension of the `--output` matches the desired format.</small></small>
@@ -161,10 +160,9 @@ robot convert --input edit.owl \
 
 ```
 robot merge --input edit.owl --collapse-import-closure true \
-  reason --reasoner ELK --create-new-ontology false \
-  annotate --version-iri \
-  http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output chained_release.ttl
+  reason --reasoner ELK \
+  annotate --version-iri http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
+  convert --output results/chained_release.ttl
 ```
 
 ## Makefiles
@@ -196,8 +194,8 @@ make release
 
 ```
 robot diff --left non-reasoned.owl \
-  --right reasoned.owl \
-  --output diff.txt
+  --right results/reasoned.owl \
+  --output results/diff.txt
 ```
 
 <small><small>**NOTE**: If you do not include an `--output`, the results will be printed to the terminal.</small></small>
@@ -215,7 +213,7 @@ robot diff --left non-reasoned.owl \
 
 ```
 robot query --input edit.owl \
-  --query select.rq select.tsv
+  --query select.rq results/select.tsv
 ```
 
 ---
@@ -226,7 +224,7 @@ robot query --input edit.owl \
 
 ```
 robot query --input edit.owl \
-  --query ask.rq ask.txt
+  --query ask.rq results/ask.txt
 ```
 
 ## Verify
@@ -243,7 +241,7 @@ robot query --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir .
+  --output-dir results
 ```
 
 ---
@@ -255,7 +253,7 @@ robot verify --input edit.owl \
 ```
 robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir .
+  --output-dir results
 ```
 
 
@@ -275,7 +273,7 @@ robot verify --input edit.owl \
 ### Generate a Report
 
 ```
-robot report --input edit.owl --output report.tsv
+robot report --input edit.owl --output results/report.tsv
 ```
 
 ## Continuous Integration
@@ -321,10 +319,11 @@ robot extract \
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --term OBI:0000443 \
   --method BOT \
-  --output obi_bot.owl
+  --output results/obi_bot.owl
 ```
 
-<small><small>**NOTE**: You can also include a list of terms to extract in a text file with `--term-file`.</small></small>
+<small><small>**NOTE**: You can also include a list of terms to extract in a text file with `--term-file`.<br>
+<small><small>**NOTE 2**: To use a local file, use `--input <file>` instead of `--input-iri`.</small></small>
 
 ---
 
@@ -340,7 +339,7 @@ robot extract \
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --method MIREOT \
   --lower-terms obi_terms.txt \
-  --output obi_mireot.owl
+  --output results/obi_mireot.owl
 ```
 
 <small><small>**NOTE**: Without specifiying any `--upper-terms`, the MIREOT method will include all ancestors up to `owl:Thing`.<br>
@@ -360,7 +359,8 @@ robot extract \
 ```
 robot template --input edit.owl \
   --template module.tsv \
-  --output module.owl
+  --ontology-iri http://purl.obolibrary.org/obo/robot/module.owl \
+  --output results/module.owl
 ```
 
 <small><small>**NOTE**: `template` gets all the entity labels from `edit.owl` so we are able to use the labels in the spreadsheet, instead of always specifying the ID. If we didn't include the `--input`, the labels would not resolve.</small></small>
@@ -374,12 +374,11 @@ robot template --input edit.owl \
 ```
 robot template --input edit.owl \
   --merge-before \
-  --collapse-import-closure false \
   --template new_class.tsv \
-  --output new_class.owl
+  --output results/new_class.owl
 ```
 
-<small><small>**NOTE**: because the edit ontology already contains import statements, we don't want these to be merged in so we need to include `--collapse-import-closure false`.</small></small>
+<small><small>**NOTE**: if your ontology includes imports, use `--collapse-import-closure false` with any merge option to maintain the closure.</small></small>
 
 # Modular Releases
 
@@ -402,16 +401,12 @@ robot template --input edit.owl \
 
 ```
 robot query --input edit.owl \
-  --query construct.rq construct.ttl 
+  --query construct.rq results/construct.ttl \
+  merge --input results/construct.ttl \
+  --output results/update.owl
 ```
 
-<small><br>The `construct.ttl` file isn't much use on its own; we need to merge it:</small>
-
-```
-robot merge --input edit.owl \
-  --input construct.ttl \
-  --output update.owl
-```
+<small>The `construct.ttl` file isn't much use on its own; we need to merge it. For `query`, the output ontology is the *unchanged* input ontology, so we can chain this with the `merge` command to merge `construct.ttl`.</small>
 
 ## Remove
 
@@ -436,7 +431,7 @@ Released with v1.2.0-alpha.
 robot remove --input edit.owl \
   --term UBERON:0000475 \
   --select "self descendants" \
-  --output removed.owl
+  --output results/removed.owl
 ```
 
 ---
@@ -446,9 +441,11 @@ robot remove --input edit.owl \
 ```
 robot remove --input edit.owl \
   --axioms equivalent \
-  remove --select parents --select anonymous \
-  --output simple.owl
+  remove --select parents --select anonymous --select imports \
+  --output results/simple.owl
 ```
+
+<small><small>**NOTE**: `--select` accepts a string of options, or can be passed multiple times. For a string of options (previous example) the selected set is the union of all options (both the input term and all descendants of the term). For passing in multiple select options (as above), the options are processed in order (first the parents are selected, and then only the anonymous parents are selected).</small></small>
 
 ## Filter
 
@@ -464,11 +461,11 @@ Released with v1.2.0-alpha - previously, `filter` only filtered for object prope
 ```
 robot filter --input edit.owl \
   --term UBERON:0000475 \
-  --select self --select descendants --select annotations \
-  --output branch.owl
+  --select "self descendants annotations" \
+  --output results/branch.owl
 ```
 
-<small><small>NOTE: in order to include annotations on the filtered entities, `--select annotations` must be included. Otherwise, you muist include *all* annotation properties in the set of input terms.</small></small>
+<small><small>**NOTE**: in order to include annotations on the filtered entities, `--select annotations` must be included. Otherwise, you muist include *all* annotation properties in the set of input terms.</small></small>
 
 ---
 
@@ -479,7 +476,8 @@ robot filter --input edit.owl \
   --select \
   "oboInOwl:inSubset=<http://purl.obolibrary.org/obo/uberon/core#uberon_slim>" \
   --select annotations \
-  --output uberon_slim.owl
+  --output-iri http://purl.obolibrary.org/robot/uberon_slim.owl
+  --output results/uberon_slim.owl
 ```
 
 <small><small>**NOTE**: selecting for annotations is highly configurable:<br>

@@ -87,18 +87,15 @@ convert
 </section><section class="slide level2">
 
 <h3 id="merge-separate-ontologies">Merge Separate Ontologies</h3>
-<p><small>The <code>--collapse-import-closure</code> option is not supported in v1.0.0.</small></p>
 <pre><code>robot merge --input edit.owl \
   --input foo.owl \
-  --collapse-import-closure false \
-  --output merged.owl</code></pre>
+  --output results/merged.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="merge-imports">Merge Imports</h3>
-<p><small>ROBOT v1.0.0 will automatically merge imports.</small></p>
-<pre><code>robot merge --input edit.owl \
-  --collapse-import-closure true \
-  --output merged_imports.owl</code></pre>
+<p><small>ROBOT will automatically merge imports. To <em>not</em> merge imports, include <code>--collapse-import-closure false</code>. This option is not supported in v1.0.0.</small></p>
+<pre><code>robot merge --input with-import.owl \
+  --output results/merged_imports.owl</code></pre>
 </section><section id="reason" class="slide level2">
 <h2>Reason</h2>
 <ol type="1">
@@ -117,12 +114,13 @@ convert
 </section><section class="slide level2">
 
 <h3 id="logical-validation">Logical Validation</h3>
-<pre><code>robot reason --input inconsistent.owl</code></pre>
+<p><small>Validates that the ontology contains no unsatisfiable entities and that it is not inconsistent.</small></p>
+<pre><code>robot reason --input unsatisfiable.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="automatic-classification">Automatic Classification</h3>
 <pre><code>robot reason --input non-reasoned.owl \
-  --output reasoned.owl</code></pre>
+  --output results/reasoned.owl</code></pre>
 </section><section id="annotate" class="slide level2">
 <h2>Annotate</h2>
 <ol type="1">
@@ -132,11 +130,10 @@ convert
 
 <h3 id="add-metadata">Add Metadata</h3>
 <pre><code>robot annotate --input edit.owl \
-  --ontology-iri https://github.com/ontodev/robot/edit.owl \
   --version-iri \
     https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
   --annotation oboInOwl:date &quot;08:07:2018 12:00&quot; \
-  --output annotated.owl</code></pre>
+  --output results/annotated.owl</code></pre>
 </section><section id="convert" class="slide level2">
 <h2>Convert</h2>
 <ol type="1">
@@ -161,22 +158,22 @@ convert
 <h3 id="convert-the-edit-file">Convert the Edit File</h3>
 <pre><code>robot convert --input edit.owl \
   --format owl \
-  --output release.owl</code></pre>
+  --output results/release.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: OWL functional syntax is defined by the suffix <code>.ofn</code> - if you want to convert to that format, use <code>--format ofn</code> or an output ending in <code>.ofn</code>. The <code>.owl</code> suffix can be used to represent any OWL ontology. Using <code>--format owl</code> or excluding the <code>--format</code> option and specifying an output with <code>.owl</code> will convert to RDF/XML.</small></small></p>
 </section><section class="slide level2">
 
 <h3 id="convert-to-obo">Convert to OBO</h3>
 <pre><code>robot convert --input edit.owl \
-  --output release.obo</code></pre>
+  --output results/release.obo</code></pre>
 <p><small><small><strong>NOTE</strong>: You do not always need to include the <code>--format</code> if the extension of the <code>--output</code> matches the desired format.</small></small></p>
 </section></section>
 <section><section id="automated-workflows" class="title-slide slide level1"><h1>Automated Workflows</h1></section><section id="chaining-commands" class="slide level2">
 <h2>Chaining Commands</h2>
 <p><small>Output ontologies can be used as the input to subsequent commands. Only the first command uses an <code>--input</code>, and only the last command uses an <code>--output</code>.</small></p>
 <pre><code>robot merge --input edit.owl --collapse-import-closure true \
-  reason --reasoner ELK --create-new-ontology false \
-  annotate --version-iri \
-  http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
-  convert --output chained_release.ttl</code></pre>
+  reason --reasoner ELK \
+  annotate --version-iri http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
+  convert --output results/chained_release.ttl</code></pre>
 </section><section id="makefiles" class="slide level2">
 <h2>Makefiles</h2>
 <p><small>A Makefile contains a set of rules to make target objects.<br>Here, we use it to create the release files.</small></p>
@@ -205,8 +202,8 @@ report
 
 <h3 id="compare-axioms">Compare Axioms</h3>
 <pre><code>robot diff --left non-reasoned.owl \
-  --right reasoned.owl \
-  --output diff.txt</code></pre>
+  --right results/reasoned.owl \
+  --output results/diff.txt</code></pre>
 <p><small><small><strong>NOTE</strong>: If you do not include an <code>--output</code>, the results will be printed to the terminal.</small></small></p>
 </section><section id="query" class="slide level2">
 <h2>Query</h2>
@@ -219,13 +216,13 @@ report
 <h3 id="select-query">Select Query</h3>
 <p><small>SELECT queries can be useful for statistics on the ontology, and for sharing data. For example, you could get a list of all the terms containing just the IDs and labels.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query select.rq select.tsv</code></pre>
+  --query select.rq results/select.tsv</code></pre>
 </section><section class="slide level2">
 
 <h3 id="ask-query">Ask Query</h3>
 <p><small>ASK queries can help determine if something exists in the ontology or not. For example, if you want to make sure that “trunk” is in the “vertebrate core” subset.</small></p>
 <pre><code>robot query --input edit.owl \
-  --query ask.rq ask.txt</code></pre>
+  --query ask.rq results/ask.txt</code></pre>
 </section><section id="verify" class="slide level2">
 <h2>Verify</h2>
 <ol type="1">
@@ -238,14 +235,14 @@ report
 <p><small>Sometimes, classes can be accidentally orphaned. This verification ensures that all classes, aside from the top-level “anatomical entity”, have asserted parents. If they do not, the verification fails.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify.rq \
-  --output-dir .</code></pre>
+  --output-dir results</code></pre>
 </section><section class="slide level2">
 
 <h3 id="unsuccessful-verification">Unsuccessful Verification</h3>
 <p><small>This verify query checks that all classes have an equivalent class statement. In our edit ontology, only some of the classes have equivalent classes, so this will fail.</small></p>
 <pre><code>robot verify --input edit.owl \
   --queries verify_fail.rq \
-  --output-dir .</code></pre>
+  --output-dir results</code></pre>
 </section><section id="report" class="slide level2">
 <h2>Report</h2>
 <ol type="1">
@@ -261,7 +258,7 @@ report
 </section><section class="slide level2">
 
 <h3 id="generate-a-report">Generate a Report</h3>
-<pre><code>robot report --input edit.owl --output report.tsv</code></pre>
+<pre><code>robot report --input edit.owl --output results/report.tsv</code></pre>
 </section><section id="continuous-integration" class="slide level2">
 <h2>Continuous Integration</h2>
 <ul>
@@ -300,8 +297,8 @@ template
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --term OBI:0000443 \
   --method BOT \
-  --output obi_bot.owl</code></pre>
-<p><small><small><strong>NOTE</strong>: You can also include a list of terms to extract in a text file with <code>--term-file</code>.</small></small></p>
+  --output results/obi_bot.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: You can also include a list of terms to extract in a text file with <code>--term-file</code>.<br> <small><small><strong>NOTE 2</strong>: To use a local file, use <code>--input &lt;file&gt;</code> instead of <code>--input-iri</code>.</small></small></p>
 </section><section class="slide level2">
 
 <h3 id="extract-with-mireot">Extract with MIREOT</h3>
@@ -310,7 +307,7 @@ template
   --input-iri http://purl.obolibrary.org/obo/obi.owl \
   --method MIREOT \
   --lower-terms obi_terms.txt \
-  --output obi_mireot.owl</code></pre>
+  --output results/obi_mireot.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: Without specifiying any <code>--upper-terms</code>, the MIREOT method will include all ancestors up to <code>owl:Thing</code>.<br> <strong>NOTE 2</strong>: To just specify <em>one</em> term to extract, use <code>--lower-term</code></small></small></p>
 </section><section id="template" class="slide level2">
 <h2>Template</h2>
@@ -324,7 +321,8 @@ template
 <p><small>This will create a standalone module that can be included in the edit file with an import statement. To update the module, editors only need to update the spreadsheet and run this command to remake the module.</small></p>
 <pre><code>robot template --input edit.owl \
   --template module.tsv \
-  --output module.owl</code></pre>
+  --ontology-iri http://purl.obolibrary.org/obo/robot/module.owl \
+  --output results/module.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: <code>template</code> gets all the entity labels from <code>edit.owl</code> so we are able to use the labels in the spreadsheet, instead of always specifying the ID. If we didn’t include the <code>--input</code>, the labels would not resolve.</small></small></p>
 </section><section class="slide level2">
 
@@ -332,10 +330,9 @@ template
 <p><small>For one-time class creation (especially if many classes need to be created), a temporary template can be created and the results immediately merged into the edit ontology.</small></p>
 <pre><code>robot template --input edit.owl \
   --merge-before \
-  --collapse-import-closure false \
   --template new_class.tsv \
-  --output new_class.owl</code></pre>
-<p><small><small><strong>NOTE</strong>: because the edit ontology already contains import statements, we don’t want these to be merged in so we need to include <code>--collapse-import-closure false</code>.</small></small></p>
+  --output results/new_class.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: if your ontology includes imports, use <code>--collapse-import-closure false</code> with any merge option to maintain the closure.</small></small></p>
 </section></section>
 <section><section id="modular-releases" class="title-slide slide level1"><h1>Modular Releases</h1></section><section class="slide level2">
 
@@ -358,11 +355,10 @@ filter
 
 <h3 id="update-annotations-with-construct">Update Annotations with CONSTRUCT</h3>
 <pre><code>robot query --input edit.owl \
-  --query construct.rq construct.ttl </code></pre>
-<p><small><br>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it:</small></p>
-<pre><code>robot merge --input edit.owl \
-  --input construct.ttl \
-  --output update.owl</code></pre>
+  --query construct.rq results/construct.ttl \
+  merge --input results/construct.ttl \
+  --output results/update.owl</code></pre>
+<p><small>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it. For <code>query</code>, the output ontology is the <em>unchanged</em> input ontology, so we can chain this with the <code>merge</code> command to merge <code>construct.ttl</code>.</small></p>
 </section><section id="remove" class="slide level2">
 <h2>Remove</h2>
 <p>Released with v1.2.0-alpha.</p>
@@ -384,14 +380,15 @@ filter
 <pre><code>robot remove --input edit.owl \
   --term UBERON:0000475 \
   --select &quot;self descendants&quot; \
-  --output removed.owl</code></pre>
+  --output results/removed.owl</code></pre>
 </section><section class="slide level2">
 
 <h3 id="create-a-simple-version">Create a ‘Simple’ Version</h3>
 <pre><code>robot remove --input edit.owl \
   --axioms equivalent \
-  remove --select parents --select anonymous \
-  --output simple.owl</code></pre>
+  remove --select parents --select anonymous --select imports \
+  --output results/simple.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: <code>--select</code> accepts a string of options, or can be passed multiple times. For a string of options (previous example) the selected set is the union of all options (both the input term and all descendants of the term). For passing in multiple select options (as above), the options are processed in order (first the parents are selected, and then only the anonymous parents are selected).</small></small></p>
 </section><section id="filter" class="slide level2">
 <h2>Filter</h2>
 <p>Released with v1.2.0-alpha - previously, <code>filter</code> only filtered for object properties.</p>
@@ -404,9 +401,9 @@ filter
 <h3 id="extract-a-branch">Extract a Branch</h3>
 <pre><code>robot filter --input edit.owl \
   --term UBERON:0000475 \
-  --select self --select descendants --select annotations \
-  --output branch.owl</code></pre>
-<p><small><small>NOTE: in order to include annotations on the filtered entities, <code>--select annotations</code> must be included. Otherwise, you muist include <em>all</em> annotation properties in the set of input terms.</small></small></p>
+  --select &quot;self descendants annotations&quot; \
+  --output results/branch.owl</code></pre>
+<p><small><small><strong>NOTE</strong>: in order to include annotations on the filtered entities, <code>--select annotations</code> must be included. Otherwise, you muist include <em>all</em> annotation properties in the set of input terms.</small></small></p>
 </section><section class="slide level2">
 
 <h3 id="create-a-subset">Create a Subset</h3>
@@ -414,7 +411,8 @@ filter
   --select \
   &quot;oboInOwl:inSubset=&lt;http://purl.obolibrary.org/obo/uberon/core#uberon_slim&gt;&quot; \
   --select annotations \
-  --output uberon_slim.owl</code></pre>
+  --output-iri http://purl.obolibrary.org/robot/uberon_slim.owl
+  --output results/uberon_slim.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: selecting for annotations is highly configurable:<br> <code>CURIE=CURIE</code><br> <code>CURIE=&quot;literal&quot;^^datatype</code><br> <code>CURIE=&lt;IRI&gt;</code><br> <code>CURIE=~&quot;regex pattern&quot;</code></small></small></p>
 </section></section>
 <section><section id="other-commands" class="title-slide slide level1"><h1>Other Commands</h1></section><section class="slide level2">

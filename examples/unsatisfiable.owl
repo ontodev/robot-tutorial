@@ -6,6 +6,6 @@ Class: C
 Class: O
    DisjointWith: C
 
-Individual: I
-  Types: C
-  Types: O
+Class: D
+  SubClassOf: C
+  SubClassOf: O
