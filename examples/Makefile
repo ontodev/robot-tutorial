@@ -9,7 +9,7 @@ SHELL := bash
 
 # MAIN TASKS
 
-release: test build
+release: test build subsets
 test: verify
 
 # VARIABLES
@@ -59,7 +59,6 @@ $(DATE)/$(ONT).obo: $(DATE)/$(ONT).owl
 # SUBSETS
 
 # This generates the three subset files
-# Currently not implemented in `make release` as this `filter` is not supported in 1.0.0
 .PHONY: subsets
 subsets: $(SUBS) | init
 $(SUBS): $(DATE)/$(ONT).owl

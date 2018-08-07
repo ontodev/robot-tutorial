@@ -23,9 +23,10 @@ title: ROBOT Tutorial
 
 ## Let's get started!
 
-- optional: download [ROBOT v1.2.0-alpha](https://github.com/ontodev/robot/releases/tag/v1.2.0-alpha-1)
 - download the [tutorial repository](https://github.com/rctauber/robot-tutorial)
-- open the `examples` directory in the command line
+- open the folder in the command line, then:
+  - `sh docker.sh`
+  - `cd examples`
 
 # ROBOT for Repetitive Tasks
 
@@ -172,6 +173,8 @@ robot merge --input edit.owl --collapse-import-closure true \
 ```
 make release
 ```
+
+<small><small>**NOTE**: This Makefile will fail on v1.0.0 and v1.1.0 - alternatively, run `make build`.</small></small>
 
 # Quality Assurance
 
@@ -372,8 +375,7 @@ robot template --input edit.owl \
 <small>For one-time class creation (especially if many classes need to be created), a temporary template can be created and the results immediately merged into the edit ontology.</small>
 
 ```
-robot template --input edit.owl \
-  --merge-before \
+robot template --input edit.owl --merge-before \
   --template new_class.tsv \
   --output results/new_class.owl
 ```

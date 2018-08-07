@@ -59,9 +59,12 @@
 </section><section id="lets-get-started" class="slide level2">
 <h2>Let’s get started!</h2>
 <ul>
-<li>optional: download <a href="https://github.com/ontodev/robot/releases/tag/v1.2.0-alpha-1">ROBOT v1.2.0-alpha</a></li>
 <li>download the <a href="https://github.com/rctauber/robot-tutorial">tutorial repository</a></li>
-<li>open the <code>examples</code> directory in the command line</li>
+<li>open the folder in the command line, then:
+<ul>
+<li><code>sh docker.sh</code></li>
+<li><code>cd examples</code></li>
+</ul></li>
 </ul>
 </section></section>
 <section><section id="robot-for-repetitive-tasks" class="title-slide slide level1"><h1>ROBOT for Repetitive Tasks</h1></section><section class="slide level2">
@@ -178,6 +181,7 @@ convert
 <h2>Makefiles</h2>
 <p><small>A Makefile contains a set of rules to make target objects.<br>Here, we use it to create the release files.</small></p>
 <pre><code>make release</code></pre>
+<p><small><small><strong>NOTE</strong>: This Makefile will fail on v1.0.0 and v1.1.0 - alternatively, run <code>make build</code>.</small></small></p>
 </section></section>
 <section><section id="quality-assurance" class="title-slide slide level1"><h1>Quality Assurance</h1></section><section class="slide level2">
 
@@ -328,8 +332,7 @@ template
 
 <h3 id="add-a-class-to-an-ontology">Add a Class to an Ontology</h3>
 <p><small>For one-time class creation (especially if many classes need to be created), a temporary template can be created and the results immediately merged into the edit ontology.</small></p>
-<pre><code>robot template --input edit.owl \
-  --merge-before \
+<pre><code>robot template --input edit.owl --merge-before \
   --template new_class.tsv \
   --output results/new_class.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: if your ontology includes imports, use <code>--collapse-import-closure false</code> with any merge option to maintain the closure.</small></small></p>
