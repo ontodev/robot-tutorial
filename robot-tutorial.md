@@ -323,7 +323,7 @@ robot extract \
 ```
 
 <small><small>**NOTE**: You can also include a list of terms to extract in a text file with `--term-file`.<br>
-<small><small>**NOTE 2**: To use a local file, use `--input <file>` instead of `--input-iri`.</small></small>
+**NOTE 2**: To use a local file, use `--input <file>` instead of `--input-iri`.</small></small>
 
 ---
 
