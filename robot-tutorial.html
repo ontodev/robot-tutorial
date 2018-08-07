@@ -333,7 +333,7 @@ template
   --template new_class.tsv \
   --output results/new_class.owl</code></pre>
 <p><small><small><strong>NOTE</strong>: if your ontology includes imports, use <code>--collapse-import-closure false</code> with any merge option to maintain the closure.</small></small></p>
-</section></section>
+
 <section><section id="modular-releases" class="title-slide slide level1"><h1>Modular Releases</h1></section><section class="slide level2">
 
 <h3>
@@ -358,7 +358,7 @@ filter
   --query construct.rq results/construct.ttl \
   merge --input results/construct.ttl \
   --output results/update.owl</code></pre>
-<p><small>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it. For <code>query</code>, the output ontology is the <em>unchanged</em> input ontology, so we can chain this with the <code>merge</code> command to merge <code>construct.ttl</code>.</small></p>
+<p><small><small><strong>NOTE</strong>: The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it. For <code>query</code>, the output ontology is the <em>unchanged</em> input ontology, so we can chain this with the <code>merge</code> command to merge <code>construct.ttl</code>.</small></small></p>
 </section><section id="remove" class="slide level2">
 <h2>Remove</h2>
 <p>Released with v1.2.0-alpha.</p>
