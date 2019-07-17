@@ -1,6 +1,6 @@
 # ROBOT Tutorial
 
-[View the slideshow here!](http://htmlpreview.github.io/?https://github.com/rctauber/robot-tutorial/blob/master/robot-tutorial.html)
+[View the slideshow here!](https://rctauber.github.io/robot-tutorial)
 
 Example files used by the tutorial are in the `examples` directory.
 
