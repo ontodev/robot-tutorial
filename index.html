@@ -53,9 +53,9 @@
 </section><section id="robot-releases" class="slide level2">
 <h2>ROBOT Releases</h2>
 <ul>
-<li>v1.0.0 released Feb 8, 2018</li>
-<li>v1.1.0 released Aug 4, 2018</li>
-<li>v1.2.0-alpha pre-released Aug 4, 2018</li>
+<li>v1.0.0 released Feb 8, 2018 …</li>
+<li>v1.4.0 released Mar 15, 2019</li>
+<li>v1.4.1 released Jun 27, 2019</li>
 </ul>
 </section><section id="lets-get-started" class="slide level2">
 <h2>Let’s get started!</h2>
@@ -202,14 +202,30 @@ report
 <h2>Diff</h2>
 <ol type="1">
 <li>compare the axioms in two version of an ontology</li>
+<li>generate a summary page of changes</li>
 </ol>
+<p><small><code>diff</code> supports different formats:</p>
+<ul>
+<li><code>plain</code>: default, shows removed and added axioms</li>
+<li><code>pretty</code>: plain, plus entity labels for IRIs</li>
+<li><code>html</code>: HTML summary page (easy for humans!)</li>
+<li><code>markdown</code>: markdown summary (great for GitHub!)</li>
+</ul>
+<p></small></p>
 </section><section class="slide level2">
 
-<h3 id="compare-axioms">Compare Axioms</h3>
+<h3 id="compare-axioms-default">Compare Axioms (Default)</h3>
 <pre><code>robot diff --left non-reasoned.owl \
   --right results/reasoned.owl \
   --output results/diff.txt</code></pre>
 <p><small><small><strong>NOTE</strong>: If you do not include an <code>--output</code>, the results will be printed to the terminal.</small></small></p>
+</section><section class="slide level2">
+
+<h3 id="human-readable-diff">Human-Readable Diff</h3>
+<pre><code>robot diff --left non-reasoned.owl \
+  --right results/reasoned.owl \
+  --format html \
+  --output results/diff.html</code></pre>
 </section><section id="query" class="slide level2">
 <h2>Query</h2>
 <ol type="1">
@@ -251,7 +267,7 @@ report
 </section><section id="report" class="slide level2">
 <h2>Report</h2>
 <ol type="1">
-<li>run a series of SPARQL queries to find common violations (as of v1.1.0)</li>
+<li>run a series of SPARQL queries to find common violations</li>
 </ol>
 </section><section class="slide level2">
 
@@ -361,11 +377,24 @@ filter
 <pre><code>robot query --input edit.owl \
   --query construct.rq results/construct.ttl \
   merge --input results/construct.ttl \
-  --output results/update.owl</code></pre>
+  --output results/construct.owl</code></pre>
 <p><small>The <code>construct.ttl</code> file isn’t much use on its own; we need to merge it. For <code>query</code>, the output ontology is the <em>unchanged</em> input ontology, so we can chain this with the <code>merge</code> command to merge <code>construct.ttl</code>.</small></p>
+</section><section id="querying-with-sparql-update" class="slide level2">
+<h2>Querying with SPARQL UPDATE</h2>
+<ul>
+<li>UPDATE changes the RDF data and outputs an updated ontology</li>
+<li>allows deletion and insertion of triples</li>
+<li>no need to merge after running the UPDATE</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="update-annotations-with-update">Update Annotations with UPDATE</h3>
+<pre><code>robot query --input edit.owl \
+  --update update.ru \
+  --output results/updated.owl</code></pre>
+<p><small>Here, we replace ‘definition’ (<code>IAO:0000115</code>) with ‘external_definition’ (<code>UBPROP:0000001</code>) for all UBERON terms.</small></p>
 </section><section id="remove" class="slide level2">
 <h2>Remove</h2>
-<p>Released with v1.2.0-alpha.</p>
 <ol type="1">
 <li>remove a class and its descendants</li>
 <li>create a ‘simple’ version of an ontology</li>
@@ -422,13 +451,13 @@ filter
 <section><section id="other-commands" class="title-slide slide level1"><h1>Other Commands</h1></section><section class="slide level2">
 
 <h3>
-materialize
+explain     materialize
 </h3>
 <h3>
  mirror     reduce
 </h3>
 <h3>
-  relax     repair
+  relax    rename    repair
 </h3>
 <h3>
 unmerge     validate

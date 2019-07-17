@@ -25,9 +25,9 @@ SUBS = efo_slim uberon_slim upper_level
 TS = $(shell date +'%m:%d:%Y %H:%M')
 
 init:
-	mkdir $(DATE) \
-	&& mkdir $(SUB) \
-	&& mkdir $(REPORT)
+	mkdir -p $(DATE) \
+	&& mkdir -p $(SUB) \
+	&& mkdir -p $(REPORT)
 
 # TEST
 
@@ -50,7 +50,7 @@ $(DATE)/$(ONT).owl: $(EDIT)
 	 --annotation oboInOwl:date "$(TS)" --output $@
 
 # This creates the OBO release file (ont.obo)
-$(DATE)/$(ONT).obo: $(DATE)/$(ONT).owl
+$(DATE)/$(ONT).obo: $(DATE)/$(ONT).owl | init
 	robot convert --input $< --format obo\
 	 --output $(basename $@)-temp.obo && \
 	grep -v ^owl-axioms $(basename $@)-temp.obo > $@ && \

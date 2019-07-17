@@ -17,9 +17,9 @@ title: ROBOT Tutorial
 
 ## ROBOT Releases
 
-- v1.0.0 released Feb 8, 2018
-- v1.1.0 released Aug 4, 2018
-- v1.2.0-alpha pre-released Aug 4, 2018
+- v1.0.0 released Feb 8, 2018 ...
+- v1.4.0 released Mar 15, 2019
+- v1.4.1 released Jun 27, 2019
 
 ## Let's get started!
 
@@ -190,10 +190,20 @@ make release
 ## Diff
 
 1. compare the axioms in two version of an ontology
+2. generate a summary page of changes
+
+<small>`diff` supports different formats:
+
+- `plain`: default, shows removed and added axioms
+- `pretty`: plain, plus entity labels for IRIs
+- `html`: HTML summary page (easy for humans!)
+- `markdown`: markdown summary (great for GitHub!)
+
+</small>
 
 ---
 
-### Compare Axioms
+### Compare Axioms (Default)
 
 ```
 robot diff --left non-reasoned.owl \
@@ -202,6 +212,17 @@ robot diff --left non-reasoned.owl \
 ```
 
 <small><small>**NOTE**: If you do not include an `--output`, the results will be printed to the terminal.</small></small>
+
+---
+
+### Human-Readable Diff
+
+```
+robot diff --left non-reasoned.owl \
+  --right results/reasoned.owl \
+  --format html \
+  --output results/diff.html
+```
 
 ## Query
 
@@ -262,7 +283,7 @@ robot verify --input edit.owl \
 
 ## Report
 
-1. run a series of SPARQL queries to find common violations (as of v1.1.0)
+1. run a series of SPARQL queries to find common violations
 
 ---
 
@@ -405,14 +426,32 @@ robot template --input edit.owl --merge-before \
 robot query --input edit.owl \
   --query construct.rq results/construct.ttl \
   merge --input results/construct.ttl \
-  --output results/update.owl
+  --output results/construct.owl
 ```
 
 <small>The `construct.ttl` file isn't much use on its own; we need to merge it. For `query`, the output ontology is the *unchanged* input ontology, so we can chain this with the `merge` command to merge `construct.ttl`.</small>
 
-## Remove
+---
 
-Released with v1.2.0-alpha.
+## Querying with SPARQL UPDATE
+
+- UPDATE changes the RDF data and outputs an updated ontology
+- allows deletion and insertion of triples
+- no need to merge after running the UPDATE
+
+---
+
+### Update Annotations with UPDATE
+
+```
+robot query --input edit.owl \
+  --update update.ru \
+  --output results/updated.owl
+```
+
+<small>Here, we replace 'definition' (`IAO:0000115`) with 'external_definition' (`UBPROP:0000001`) for all UBERON terms.</small>
+
+## Remove
 
 1. remove a class and its descendants
 2. create a 'simple' version of an ontology
@@ -492,9 +531,9 @@ robot filter --input edit.owl \
 
 ---
 
-<h3>materialize</h3>
+<h3>explain&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;materialize</h3>
 <h3>&nbsp;mirror&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reduce</h3>
-<h3>&nbsp;&nbsp;relax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repair</h3>
+<h3>&nbsp;&nbsp;relax&nbsp;&nbsp;&nbsp;&nbsp;rename&nbsp;&nbsp;&nbsp;&nbsp;repair</h3>
 <h3>unmerge&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validate</h3>
 
 # Questions?
