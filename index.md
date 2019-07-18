@@ -24,9 +24,11 @@ title: ROBOT Tutorial
 ## Let's get started!
 
 - download the [tutorial repository](https://github.com/rctauber/robot-tutorial)
-- open the folder in the command line, then:
-  - `sh docker.sh`
-  - `cd examples`
+- get the latest ROBOT via Docker:
+  - `sh run.sh robot --version`
+- or install it following [the documentation](http://robot.obolibrary.org/)
+- navigate to examples: `cd examples`
+  - if using Docker, start each command with `sh ../run.sh`
 
 # ROBOT for Repetitive Tasks
 
