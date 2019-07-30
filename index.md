@@ -3,6 +3,18 @@ author: James Overton & Becky Tauber
 title: ROBOT Tutorial
 ---
 
+# Overview
+
+--- 
+
+- Manual editing
+- Repetitive tasks
+- Automated workflows
+- Quality assurance
+- Modular development
+- Modular releases
+- Other commands
+
 # Manual Editing
 
 ## Status Quo
@@ -21,12 +33,16 @@ title: ROBOT Tutorial
 - v1.4.0 released Mar 15, 2019
 - v1.4.1 released Jun 27, 2019
 
+## Cite ROBOT
+
+R.C. Jackson, J.P. Balhoff, E. Douglass, N.L. Harris, C.J. Mungall, and J.A. Overton. **[ROBOT: A tool for automating ontology workflows](https://rdcu.be/bMnHT)**. BMC Bioinformatics, vol. 20, July 2019.
+
 ## Let's get started!
 
-- download the [tutorial repository](https://github.com/rctauber/robot-tutorial)
+- download the **[tutorial repository](https://github.com/rctauber/robot-tutorial)**
 - get the latest ROBOT via Docker:
   - `sh run.sh robot --version`
-- or install it following [the documentation](http://robot.obolibrary.org/)
+- or install it following **[the documentation](http://robot.obolibrary.org/)**
 - navigate to examples: `cd examples`
   - if using Docker, start each command with `sh ../run.sh`
 
@@ -111,8 +127,8 @@ robot reason --input non-reasoned.owl \
 ```
 robot annotate --input edit.owl \
   --version-iri \
-    https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
-  --annotation oboInOwl:date "08:07:2018 12:00" \
+    https://github.com/ontodev/robot/releases/2019-07-31/edit.owl \
+  --annotation oboInOwl:date "07:31:2019 12:00" \
   --output results/annotated.owl
 ```
 

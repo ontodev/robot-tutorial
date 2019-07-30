@@ -38,6 +38,18 @@
   <p class="author">James Overton &amp; Becky Tauber</p>
 </section>
 
+<section><section id="overview" class="title-slide slide level1"><h1>Overview</h1></section><section class="slide level2">
+<ol>
+<li>Manual editing</li>
+<li>Repetitive tasks</li>
+<li>Automated workflows</li>
+<li>Quality assurance</li>
+<li>Modular development</li>
+<li>Modular releases</li>
+<li>Other commands</li>
+</ol>
+</section></section>
+
 <section><section id="manual-editing" class="title-slide slide level1"><h1>Manual Editing</h1></section><section id="status-quo" class="slide level2">
 <h2>Status Quo</h2>
 <ul>
@@ -57,15 +69,20 @@
 <li>v1.4.0 released Mar 15, 2019</li>
 <li>v1.4.1 released Jun 27, 2019</li>
 </ul>
+</section><section id="cite-robot" class="slide level2">
+<h2>Cite ROBOT</h2>
+R.C. Jackson, J.P. Balhoff, E. Douglass, N.L. Harris, C.J. Mungall, and J.A. Overton.<br>
+<a href="https://rdcu.be/bMnHT" target="_blank">ROBOT: A tool for automating ontology workflows</a>.<br>
+BMC Bioinformatics, vol. 20, July 2019.
 </section><section id="lets-get-started" class="slide level2">
 <h2>Let’s get started!</h2>
 <ul>
-<li>download the <a href="https://github.com/rctauber/robot-tutorial">tutorial repository</a></li>
+<li>download the <a href="https://github.com/rctauber/robot-tutorial" target="_blank">tutorial repository</a></li>
 <li>get the latest ROBOT with Docker:
 <ul>
 <li><code>sh run.sh robot --version</code></li>
 </ul></li>
-<li>or install it following <a href="http://robot.obolibrary.org/">the documentation</a></li>
+<li>or install it following <a href="http://robot.obolibrary.org/" target="_blank">the documentation</a></li>
 <li>navigate to examples: <code>cd examples</code>
 <ul>
 <li>if using Docker, start each command with <code>sh ../run.sh</code></li>
@@ -139,8 +156,8 @@ convert
 <h3 id="add-metadata">Add Metadata</h3>
 <pre><code>robot annotate --input edit.owl \
   --version-iri \
-    https://github.com/ontodev/robot/releases/2018-08-07/edit.owl \
-  --annotation oboInOwl:date &quot;08:07:2018 12:00&quot; \
+    https://github.com/ontodev/robot/releases/2019-07-31/edit.owl \
+  --annotation oboInOwl:date &quot;07:31:2019 12:00&quot; \
   --output results/annotated.owl</code></pre>
 </section><section id="convert" class="slide level2">
 <h2>Convert</h2>
