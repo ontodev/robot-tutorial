@@ -1,6 +1,6 @@
 # ROBOT Tutorial
 
-[View the slideshow here!](https://rctauber.github.io/robot-tutorial)
+[View the slideshow here!](https://ontodev.github.io/robot-tutorial)
 
 Example files used by the tutorial are in the `examples` directory.
 
