@@ -1,5 +1,5 @@
 ---
-author: James Overton & Becky Tauber
+author: James Overton & Becky Jackson
 title: ROBOT Tutorial
 ---
 
@@ -29,9 +29,10 @@ title: ROBOT Tutorial
 
 ## ROBOT Releases
 
+17 releases:
+
 - v1.0.0 released Feb 8, 2018 ...
-- v1.4.0 released Mar 15, 2019
-- v1.4.1 released Jun 27, 2019
+- v1.8.1 released Jan 27, 2021
 
 ## Cite ROBOT
 
