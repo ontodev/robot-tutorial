@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Becky Jackson">
+  <title>ROBOT Tutorial</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/league.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">ROBOT Tutorial</h1>
+  <p class="author">Becky Jackson</p>
+</section>
+
+<section>
+<section id="overview" class="title-slide slide level1">
+<h1>Overview</h1>
+
+</section>
+<section class="slide level2">
+
+<ul>
+<li>What is ROBOT?</li>
+<li>Basic tasks</li>
+<li>Ontology development</li>
+<li>Ontology releases</li>
+</ul>
+</section></section>
+<section>
+<section id="what-is-robot" class="title-slide slide level1">
+<h1>What is ROBOT?</h1>
+
+</section>
+<section class="slide level2">
+
+<p><em>A command-line tool and Java library for automating ontology development tasks.</em></p>
+</section>
+<section class="slide level2">
+
+<p><strong>ROBOT has 27 different commands!</strong></p>
+<p>We will only look at some of the most commonly-used commands in this tutorial.</p>
+</section>
+<section class="slide level2">
+
+<p>Docs for all commands are available at <a href="http://robot.obolibrary.org">http://robot.obolibrary.org</a></p>
+</section>
+<section id="robot-releases" class="slide level2">
+<h2>20 ROBOT Releases</h2>
+<ul>
+<li>v1.0.0 released Feb 8, 2018 …</li>
+<li>v1.9.0 released Jun 16, 2022</li>
+</ul>
+</section>
+<section id="cite-robot" class="slide level2">
+<h2>Cite ROBOT</h2>
+<p>R.C. Jackson, J.P. Balhoff, E. Douglass, N.L. Harris, C.J. Mungall, and J.A. Overton.</p>
+<p><strong><a href="https://rdcu.be/bMnHT">ROBOT: A tool for automating ontology workflows</a></strong>.</p>
+<p>BMC Bioinformatics, vol. 20, July 2019.</p>
+</section>
+<section id="basic-usage" class="slide level2">
+<h2>Basic Usage</h2>
+<pre><code>robot help [command]</code></pre>
+<pre><code>robot [command] --input [file] ... --output [file]</code></pre>
+</section></section>
+<section>
+<section id="basic-tasks" class="title-slide slide level1">
+<h1>Basic Tasks</h1>
+
+</section>
+<section id="how-do-you-see-what-is-stated-in-your-ontology" class="slide level2">
+<h2>How do you see what is stated in your ontology?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>export</code></p>
+<ul>
+<li><a href="http://robot.obolibrary.org/export">http://robot.obolibrary.org/export</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--header</code>: fields to include in the export</li>
+<li><code>--export</code>: output export file</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="export-header">Export Header</h3>
+<ul>
+<li>Separate fields with pipe (<code>|</code>)</li>
+<li>Special values
+<ul>
+<li><code>IRI</code> / <code>ID</code></li>
+<li><code>LABEL</code> / <code>SYNONYMS</code></li>
+<li><code>SubClass Of</code> / <code>SubClasses</code></li>
+<li><code>Type</code></li>
+</ul></li>
+<li>Properties
+<ul>
+<li><code>IAO:0000115</code> / <code>definition</code></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="get-a-table-of-parents">Get a table of parents</h3>
+<pre><code>robot export --input edit.owl \
+  --header &quot;ID|LABEL|SubClass Of&quot; \
+  --export results/export.csv</code></pre>
+<p><small>The <code>ID</code> column will always contain CURIEs and the <code>LABEL</code> column will always contain labels, but other values are rendered by their label when possible.</small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="get-a-table-of-parents-using-ids">Get a table of parents using IDs</h3>
+<pre><code>robot export --input edit.owl \
+  --header &quot;ID|SubClass Of&quot; \
+  --entity-format ID \
+  --export results/export-parents.csv</code></pre>
+<p><small>You can set the rendering for all entity references with <code>--entity-format</code>:<br><code>ID</code>, <code>IRI</code>, <code>LABEL</code>, <code>NAME</code></small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="get-a-table-of-ids-labels-and-definitions">Get a table of IDs, labels, and definitions</h3>
+<pre><code>robot export \
+  --input edit.owl \
+  --header &quot;ID|LABEL|definition&quot; \
+  --export results/export-definitions.csv</code></pre>
+<p><small>Annotations will always contain the literal values.<br>You can reference an annotation property by ID or label.</small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="get-a-table-of-properties">Get a table of properties</h3>
+<pre><code>robot export --input edit.owl \
+  --header &quot;ID|LABEL|Type&quot; \
+  --entity-select &quot;properties&quot; \
+  --export results/export-properties.csv</code></pre>
+<p><small>You can select <code>classes</code>, <code>individuals</code>, and/or <code>properties</code> with <code>--entity-select</code>:<br> <code>--entity-select "classes properties"</code></small></p>
+</section>
+<section class="slide level2">
+
+<p><code>query</code> (part 1)</p>
+<ul>
+<li><a href="http://robot.obolibrary.org/query">http://robot.obolibrary.org/query</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--query</code>: query &amp; output pair</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="run-a-select-query">Run a SELECT query</h3>
+<pre><code>robot query --input edit.owl \
+  --query select.rq results/select.tsv</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="run-an-ask-query">Run an ASK query</h3>
+<pre><code>robot query --input edit.owl \
+  --query ask.rq results/ask.txt</code></pre>
+<p><small>ASK always returns true/false</small></p>
+</section>
+<section id="how-do-you-see-what-is-inferred-by-your-ontology" class="slide level2">
+<h2>How do you see what is inferred by your ontology?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>reason</code></p>
+<ul>
+<li><a href="http://robot.obolibrary.org/reason">http://robot.obolibrary.org/reason</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--reasoner</code>: <em>optional</em> specify the reasoner to use (ELK)</li>
+<li><code>--output</code>: output ontology with inferred statements</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="perform-logical-validation">Perform logical validation</h3>
+<pre><code>robot reason --input unsatisfiable.owl</code></pre>
+<p><small>Check that there are no <em>unsatisfiable</em> entities and that the ontology is <em>consistent</em></small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="assert-inferred-statements">Assert inferred statements</h3>
+<pre><code>robot reason --input non-reasoned.owl \
+  --output results/reasoned.owl</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="interlude-perform-a-diff">Interlude: Perform a diff</h3>
+<pre><code>robot diff \
+  --left non-reasoned.owl \
+  --right results/reasoned.owl \
+  --output results/diff.diff</code></pre>
+<p><small>Formats: <code>plain</code>, <code>pretty</code>, <code>html</code>, <code>markdown</code></small></p>
+</section>
+<section class="slide level2">
+
+<p><strong>What reasoner should I use?</strong></p>
+<ul>
+<li>ELK: A fast reasoner for the OWL2 EL subset</li>
+<li>HermiT: A full OWL2 DL reasoner for complex ontologies</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="a-few-other-options">A few other options</h3>
+</section>
+<section class="slide level2">
+
+<p><strong>Annotate inferred axioms</strong></p>
+<p><small><code>--annotate-inferred-axioms true</code></small></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Create a new ontology with inferred statements only</strong></p>
+<p><small><code>--create-new-ontology true</code><br> <code>--create-new-ontology-with-annotations true</code></small></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Remove redundant subclass axioms</strong></p>
+<p><small><code>--remove-redundant-subclass-axioms true</code></small></p>
+</section></section>
+<section>
+<section id="ontology-development" class="title-slide slide level1">
+<h1>Ontology Development</h1>
+
+</section>
+<section id="how-do-you-create-ontology-content" class="slide level2">
+<h2>How do you create ontology content?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>template</code></p>
+<ul>
+<li><a href="https://robot.obolibrary.org/template">https://robot.obolibrary.org/template</a></li>
+<li><code>--input</code>: <em>optional</em> ontology containing terms/properties to use or to merge into</li>
+<li><code>--template</code>: template source file</li>
+<li><code>--output</code>: output ontology</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>What does a ROBOT template look like?</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Label</th>
+<th>Type</th>
+<th>Annotation</th>
+<th>Parent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ID</td>
+<td>LABEL</td>
+<td>TYPE</td>
+<td>A property</td>
+<td>SC %</td>
+</tr>
+<tr class="even">
+<td>ex:123</td>
+<td>Example</td>
+<td>owl:Class</td>
+<td>An example</td>
+<td>owl:Thing</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<p><strong>Special template strings</strong></p>
+<ul>
+<li><code>ID</code>: term CURIE</li>
+<li><code>LABEL</code>: term label, asserted as <code>rdfs:label</code></li>
+<li><code>TYPE</code>: term entity type (you can use classes here for instances)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Annotations</strong></p>
+<ul>
+<li>A + property label or ID
+<ul>
+<li><code>A definition</code></li>
+<li><code>A IAO:0000115</code></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Axiom Annotations</strong></p>
+<p>Axiom annotations are applied to the column to the left with <code>&gt;</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>Annotation</th>
+<th>Axiom Annotation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A definition</td>
+<td>&gt;A database_cross_reference</td>
+</tr>
+<tr class="even">
+<td>My def …</td>
+<td>url:http://example.com</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<p><strong>Logic</strong></p>
+<ul>
+<li><code>SC %</code>: direct superclass</li>
+<li><code>EC %</code>: equivalent class</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Wildcards</strong></p>
+<ul>
+<li><code>%</code> can be used as a wildcard to fill in logical expressions:
+<ul>
+<li><code>SC 'has part' some %</code></li>
+</ul></li>
+<li>You can use existing classes in the expression:
+<ul>
+<li><code>SC 'has part' some ('part 1' and %)</code></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Class Types</strong></p>
+<ul>
+<li><code>CLASS_TYPE</code>: specify <code>subclass</code> or <code>equivalent</code> expression type</li>
+<li><code>C %</code>: interchangeable expression type</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Class Type</th>
+<th>Has Part</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ID</td>
+<td>CLASS_TYPE</td>
+<td>C ‘has part’ some %</td>
+</tr>
+<tr class="even">
+<td>ex:0</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>ex:1</td>
+<td>equivalent</td>
+<td>ex:0</td>
+</tr>
+<tr class="even">
+<td>ex:2</td>
+<td>subclass</td>
+<td>ex:0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<p>You can reference a class or property by label <em>if</em>:</p>
+<ul>
+<li>It is defined in your template <em>and</em> your template has a <code>LABEL</code> column OR</li>
+<li>It is defined in your <code>--input</code> ontology</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>Including multiple values</strong></p>
+<p>Use the <code>SPLIT</code> keyword to allow multiple values in a single cell, separated by the provided character</p>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Parent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ID</td>
+<td>SC % SPLIT=,</td>
+</tr>
+<tr class="even">
+<td>ex:4</td>
+<td>ex:0,ex:1,ex:2</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<h3 id="create-a-new-module">Create a new module</h3>
+<pre><code>robot template --input edit.owl \
+  --template module.tsv \
+  --ontology-iri http://purl.obolibrary.org/obo/robot/mod.owl \
+  --output results/mod.owl</code></pre>
+<p><small>The <code>--ontology-iri</code> arg will assign this ontology IRI to our new module.<br>This can be used in the import statement in the core ontology.</small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="add-a-new-class-to-an-ontology">Add a new class to an ontology</h3>
+<pre><code>robot template --input edit.owl \
+  --merge-before \
+  --template new_class.tsv \
+  --output results/new_class.owl</code></pre>
+<p><small>If your ontology includes imports, use <code>--collapse-import-closure false</code> with any merge option to maintain the closure.</small></p>
+</section>
+<section class="slide level2">
+
+<p><code>query</code></p>
+<p><em>part 2</em></p>
+</section>
+<section class="slide level2">
+
+<h3 id="construct-a-module-with-labels-and-a-new-annotation">CONSTRUCT a module with labels and a new annotation</h3>
+<pre><code>robot query --input edit.owl \
+  --query construct.rq results/construct.ttl</code></pre>
+<p><small>You can specify the output format of the constructed module with <code>--format</code> (e.g., <code>ttl</code>)</small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="update-exsting-annotations-with-insertdelete">Update exsting annotations with INSERT/DELETE</h3>
+<pre><code>robot query --input edit.owl \
+  --update update.ru \
+  --output results/updated.owl</code></pre>
+</section>
+<section id="how-do-you-reuse-other-ontologies" class="slide level2">
+<h2>How do you reuse other ontologies?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>extract</code></p>
+<ul>
+<li><a href="https://robot.obolibrary.org/extract">https://robot.obolibrary.org/extract</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--method</code>: what kind of extract to perform</li>
+<li><code>--output</code>: output extracted module</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="extract-with-slme">Extract with SLME</h3>
+<pre><code>robot extract \
+  --input-iri http://purl.obolibrary.org/obo/obi.owl \
+  --term OBI:0000443 \
+  --method BOT \
+  --output results/obi_bot.owl</code></pre>
+<p><small>SLME modules include the input “seed” (term) and all terms required for to preserve logic between entities in the module<br> SLME methods: <code>BOT</code> (seed + superclasses), <code>TOP</code> (seed + subclasses), <code>STAR</code> (seed + inter-relationships)</small></p>
+</section>
+<section class="slide level2">
+
+<h3 id="extract-with-mireot">Extract with MIREOT</h3>
+<pre><code>robot extract \
+  --input-iri http://purl.obolibrary.org/obo/obi.owl \
+  --method MIREOT \
+  --lower-terms obi_terms.txt \
+  --output results/obi_mireot.owl</code></pre>
+<p><small>MIROET modules only preserve the subclass hierarchy, but do not include additional logical relationships.</small></p>
+</section></section>
+<section>
+<section id="ontology-releases" class="title-slide slide level1">
+<h1>Ontology Releases</h1>
+
+</section>
+<section id="how-do-you-create-a-release-version-of-your-ontology" class="slide level2">
+<h2>How do you create a “release” version of your ontology?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>merge</code></p>
+<ul>
+<li><a href="https://robot.obolibrary.org/merge">https://robot.obolibrary.org/merge</a></li>
+<li><code>--input</code>: input ontologies (as many as you want)</li>
+<li><code>--output</code>: output merged ontology</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="merge-separate-modules-of-an-ontology">Merge separate modules of an ontology</h3>
+<pre><code>robot merge --input edit.owl \
+  --input foo.owl \
+  --output results/merged.owl</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="merge-import-statements">Merge import statements</h3>
+<pre><code>robot merge --input with-import.owl \
+  --output results/merged_imports.owl</code></pre>
+<p><small>If your ontology has import statements, ROBOT will automatically merge them.<br> Use <code>--collapse-import-closure false</code> to maintain them when merging separate files</small></p>
+</section>
+<section class="slide level2">
+
+<p><code>annotate</code></p>
+<ul>
+<li><a href="https://robot.obolibrary.org/annotate">https://robot.obolibrary.org/annotate</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--version-iri</code>: add a version IRI to the ontology</li>
+<li><code>--annotation [property] [value]</code>: add an annotation to the ontology</li>
+<li><code>--output</code>: output ontology</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="add-ontology-metadata">Add ontology metadata</h3>
+<pre><code>robot annotate --input edit.owl \
+  --version-iri \
+    https://github.com/ontodev/robot/releases/2019-07-31/edit.owl \
+  --annotation oboInOwl:date &quot;07:31:2019 12:00&quot; \
+  --output results/annotated.owl</code></pre>
+</section>
+<section class="slide level2">
+
+<p><strong>Chaining Commands</strong></p>
+<pre><code>robot merge --input edit.owl --collapse-import-closure true \
+  reason --reasoner ELK \
+  annotate --version-iri http://purl.obolibrary.org/obo/robot/2018-08-07/release.owl \
+  --output release.owl</code></pre>
+</section>
+<section class="slide level2">
+
+<p><code>reason</code> - <code>relax</code> - <code>reduce</code></p>
+<ul>
+<li>Creates a complete and non-redundant view of the subclass graph for ease of browsing</li>
+<li><a href="https://robot.obolibrary.org/relax">https://robot.obolibrary.org/relax</a>
+<ul>
+<li>relaxes equivalence axioms to subclass axioms</li>
+</ul></li>
+<li><a href="https://robot.obolibrary.org/reduce">https://robot.obolibrary.org/reduce</a>
+<ul>
+<li>removes redundant subclass axioms</li>
+</ul></li>
+</ul>
+</section>
+<section id="how-do-you-ensure-your-ontology-aligns-with-obo-standards" class="slide level2">
+<h2>How do you ensure your ontology aligns with OBO standards?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>report</code></p>
+<ul>
+<li><a href="https://robot.obolibrary.org/relax">https://robot.obolibrary.org/report</a></li>
+<li><code>--input</code>: input ontology</li>
+<li><code>--format</code>: <em>optional</em> report format (tsv, csv, html, yaml, json, xlsx)</li>
+<li><code>--output</code>: output report table</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>What gets checked?</strong></p>
+<ul>
+<li><strong>Ontology metadata</strong>: description, license, title</li>
+<li><strong>Annotations</strong>: formatting, duplicates and multiples, missing required</li>
+<li><strong>Logic</strong>: equivalent pairs, missing superclasses</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="run-a-standard-report-on-your-ontology">Run a standard report on your ontology</h3>
+<pre><code>robot report --input edit.owl \
+  --output results/report.tsv</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="run-a-standard-report-without-failing">Run a standard report without failing</h3>
+<pre><code>robot report --input edit.owl \
+  --fail-on none \
+  --output results/report.tsv</code></pre>
+<p><small>You can choose what violation level to fail on: ERROR, WARN, INFO, or none</small></p>
+</section>
+<section id="what-other-checks-can-you-run-on-your-ontology" class="slide level2">
+<h2>What other checks can you run on your ontology?</h2>
+</section>
+<section class="slide level2">
+
+<p><code>verify</code></p>
+<p><a href="https://robot.obolibrary.org/verify">https://robot.obolibrary.org/verify</a></p>
+<p><small>Create your own rules using SPARQL queries and verify your ontology conforms to them</small></p>
+</section>
+<section class="slide level2">
+
+<p><code>validate-profile</code></p>
+<p><a href="https://robot.obolibrary.org/validate-profile">https://robot.obolibrary.org/validate-profile</a></p>
+<p><small>Validate your ontology against an OWL 2 profile: EL, RL, QL, DL, Full</small></p>
+</section>
+<section class="slide level2">
+
+<p><code>measure</code></p>
+<p><a href="https://robot.obolibrary.org/measure">https://robot.obolibrary.org/measure</a></p>
+<p><small>Compute metrics about your ontology (number of classes, number of axioms, OWL2 profile, etc.)</small></p>
+</section></section>
+<section>
+<section id="whats-next" class="title-slide slide level1">
+<h1>What’s next?</h1>
+
+</section>
+<section class="slide level2">
+
+<p>Explore the docs to learn more!</p>
+<p><a href="https://robot.obolibrary.org">https://robot.obolibrary.org</a></p>
+</section>
+<section class="slide level2">
+
+<p>Join the community!</p>
+<ul>
+<li>GitHub: <a href="https://github.com/ontodev/robot">https://github.com/ontodev/robot</a></li>
+<li>Slack: <a href="https://obo-communitygroup.slack.com/">https://obo-communitygroup.slack.com/</a></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  // reveal.js plugins
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
